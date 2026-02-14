@@ -257,6 +257,33 @@
             background: linear-gradient(to bottom, #FF9900, #7c3aed, #00ffd5);
             box-shadow: 0 0 15px #FF9900;
         }
+        
+        /* Custom Range Slider */
+        input[type=range] {
+            -webkit-appearance: none; 
+            width: 80px; 
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 12px;
+            width: 12px;
+            border-radius: 50%;
+            background: #00ffd5;
+            cursor: pointer;
+            margin-top: -4px;
+            box-shadow: 0 0 5px #00ffd5;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: rgba(255,255,255,0.2);
+            border-radius: 2px;
+        }
+        input[type=range]:focus {
+            outline: none;
+        }
 
         #toast {
             visibility: hidden;
@@ -343,7 +370,19 @@
                 </div>
                 
                 <div class="flex flex-col items-end gap-3 w-full md:w-auto">
-                    <div class="flex items-center justify-end gap-4 w-full">
+                    <div class="flex items-center justify-end gap-4 w-full flex-wrap">
+                        
+                        <!-- Sound Control -->
+                        <div class="flex items-center gap-2 bg-black/40 border border-white/10 px-3 py-1 rounded-lg mr-2">
+                            <button id="sound-toggle" class="text-neonBlue hover:text-white transition-colors">
+                                <!-- Icon Sound On -->
+                                <svg id="icon-sound-on" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                                <!-- Icon Sound Off (Hidden by default) -->
+                                <svg id="icon-sound-off" class="hidden" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                            </button>
+                            <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.5">
+                        </div>
+
                         <div class="text-right">
                             <span class="text-[9px] text-gray-300 uppercase tracking-widest block mb-0.5 font-bold">Status</span>
                             <span class="text-neonBlue font-tech text-xs font-bold">ACTIVE PRIME</span>
@@ -618,9 +657,58 @@
         // AUDIO PLAYER LOGIC
         const bgAudio = document.getElementById("bg-audio");
         bgAudio.volume = 0.5; // Set volume to 50%
+        
+        const soundToggle = document.getElementById('sound-toggle');
+        const iconSoundOn = document.getElementById('icon-sound-on');
+        const iconSoundOff = document.getElementById('icon-sound-off');
+        const volumeSlider = document.getElementById('volume-slider');
+
+        // Toggle Mute/Unmute
+        if(soundToggle) {
+            soundToggle.addEventListener('click', () => {
+                if(bgAudio.muted) {
+                    bgAudio.muted = false;
+                    iconSoundOn.classList.remove('hidden');
+                    iconSoundOff.classList.add('hidden');
+                    volumeSlider.value = bgAudio.volume;
+                } else {
+                    bgAudio.muted = true;
+                    iconSoundOn.classList.add('hidden');
+                    iconSoundOff.classList.remove('hidden');
+                    // Optional: set slider visual to 0? Or keep it as "last volume"
+                }
+            });
+        }
+
+        // Volume Slider
+        if(volumeSlider) {
+            volumeSlider.addEventListener('input', (e) => {
+                const val = e.target.value;
+                bgAudio.volume = val;
+                
+                // If user slides volume up from 0, unmute if muted
+                if(val > 0 && bgAudio.muted) {
+                    bgAudio.muted = false;
+                    iconSoundOn.classList.remove('hidden');
+                    iconSoundOff.classList.add('hidden');
+                }
+                // If user slides to 0, show mute icon visual (optional logic)
+                if(val == 0) {
+                     iconSoundOn.classList.add('hidden');
+                     iconSoundOff.classList.remove('hidden');
+                } else {
+                     if(!bgAudio.muted) {
+                        iconSoundOn.classList.remove('hidden');
+                        iconSoundOff.classList.add('hidden');
+                     }
+                }
+            });
+        }
 
         function playMusic() {
-            bgAudio.play().catch(error => {
+            bgAudio.play().then(() => {
+                // Autoplay started
+            }).catch(error => {
                 console.log("Autoplay prevented by browser, waiting for interaction.");
             });
         }
