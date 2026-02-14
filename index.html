@@ -289,6 +289,12 @@
 </head>
 <body class="text-gray-100 min-h-screen flex items-center justify-center p-4 selection:bg-neonOrange selection:text-black">
 
+    <!-- AUDIO PLAYER HIDDEN -->
+    <audio id="bg-audio" loop>
+        <source src="backsound.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
     <div class="bg-overlay"></div>
     <div id="toast">Prompt Berhasil Disalin!</div>
 
@@ -540,7 +546,7 @@
             <div id="content-camera" class="hidden">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
                     <a href="https://aishotstudio.com/42-camera-movements-ai-prompts/" target="_blank" class="framework-card p-6 rounded-2xl flex flex-col justify-between h-full shadow-lg relative overflow-hidden group border-neonBlue/30 hover:border-neonBlue transition-all">
-                         <div>
+                          <div>
                             <div class="flex items-center gap-3 mb-4">
                                 <div class="p-2 bg-neonBlue/20 rounded text-neonBlue">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
@@ -548,10 +554,10 @@
                                 <h3 class="text-xl font-bold text-white font-tech">42 Camera Movements</h3>
                             </div>
                             <p class="text-sm text-gray-300 mb-4 leading-relaxed">Panduan lengkap pergerakan kamera untuk AI Video generation. Pelajari 42 teknik sinematik.</p>
-                         </div>
-                         <div class="mt-4">
-                            <button class="btn-cyber w-full py-2 rounded-lg text-xs">OPEN GUIDE</button>
-                         </div>
+                          </div>
+                          <div class="mt-4">
+                             <button class="btn-cyber w-full py-2 rounded-lg text-xs">OPEN GUIDE</button>
+                          </div>
                     </a>
                 </div>
             </div>
@@ -608,6 +614,25 @@
         ];
 
         let currentPromptContent = "";
+        
+        // AUDIO PLAYER LOGIC
+        const bgAudio = document.getElementById("bg-audio");
+        bgAudio.volume = 0.5; // Set volume to 50%
+
+        function playMusic() {
+            bgAudio.play().catch(error => {
+                console.log("Autoplay prevented by browser, waiting for interaction.");
+            });
+        }
+        
+        // Coba play saat load
+        playMusic();
+
+        // Paksa play saat klik pertama di halaman (karena kebijakan browser)
+        document.body.addEventListener('click', function() {
+            playMusic();
+        }, { once: true });
+
 
         function switchTab(tab) {
             ['content-apps', 'content-tutorial', 'content-framework', 'content-camera'].forEach(id => {
@@ -661,6 +686,7 @@
                 document.getElementById('welcome-modal').classList.remove('hidden');
                 initFakeOnlineCounter();
                 initExplorer();
+                playMusic(); // Trigger music on login
             } else {
                 document.getElementById('error-message').textContent = 'ACCESS DENIED: INVALID TOKEN';
             }
@@ -689,13 +715,9 @@
                 document.getElementById('portal-page').classList.remove('hidden');
                 initFakeOnlineCounter();
                 initExplorer();
+                playMusic(); // Trigger music if session exists
             }
         });
-
-        // Toggle Eye Password
-        const passwordField = document.getElementById('password');
-        const toggleBtn = document.createElement('button'); // In original was in HTML but I ensure it works
-        // (Assuming original HTML structure for the eye button is used as provided in your snippet)
     </script>
 </body>
 </html>
