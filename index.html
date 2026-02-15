@@ -407,12 +407,14 @@
             <!-- TAB NAVIGATION -->
             <div class="flex flex-wrap gap-4 mb-10 border-b border-white/5 pb-4">
                 <button onclick="switchTab('apps')" id="tab-apps" class="tab-btn active">APPLICATIONS</button>
+                <!-- TAB BARU: TOOLKIT -->
+                <button onclick="switchTab('toolkit')" id="tab-toolkit" class="tab-btn">TOOLKIT</button>
                 <button onclick="switchTab('tutorial')" id="tab-tutorial" class="tab-btn">TUTORIALS</button>
                 <button onclick="switchTab('framework')" id="tab-framework" class="tab-btn">PROMPT FRAMEWORK</button>
                 <button onclick="switchTab('camera')" id="tab-camera" class="tab-btn text-neonBlue border-neonBlue/30 hover:border-neonBlue">42 CAMERA MOVEMENTS</button>
             </div>
 
-            <!-- TAB CONTENT: APPLICATIONS (UPDATED WITH 3 NEW APPS) -->
+            <!-- TAB CONTENT: APPLICATIONS -->
             <div id="content-apps">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
                     
@@ -543,6 +545,34 @@
                     </a>
 
                 </div>
+            </div>
+
+            <!-- TAB CONTENT: TOOLKIT (NEW CONTENT ADDED) -->
+            <div id="content-toolkit" class="hidden">
+                 <div class="mb-6 flex items-center gap-4">
+                     <h2 class="text-3xl font-tech font-bold text-white tracking-[0.2em]">TOOLS <span class="text-neonBlue">KREATIF</span></h2>
+                     <div class="h-[2px] flex-1 bg-gradient-to-r from-neonBlue to-transparent"></div>
+                 </div>
+                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
+                     
+                     <!-- Toolkit App 1: Manipulation Audio -->
+                     <a href="https://audio-modifier.vercel.app/" target="_blank" class="block app-card p-6 rounded-2xl group relative overflow-hidden">
+                         <div class="mb-4 text-accentPurple group-hover:scale-110 transition-transform origin-left relative z-10">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 10v3"/><path d="M6 6v11"/><path d="M10 3v18"/><path d="M14 8v7"/><path d="M18 5v13"/><path d="M22 10v4"/></svg>
+                         </div>
+                         <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neonBlue transition-colors relative z-10">Manipulation Audio</h3>
+                         <p class="text-xs text-gray-200 font-medium">Advanced audio processing.</p>
+                     </a>
+ 
+                     <!-- Toolkit App 2: Ailabs Capcut -->
+                     <a href="https://ailabs-cc.vercel.app/" target="_blank" class="block app-card p-6 rounded-2xl group relative overflow-hidden">
+                         <div class="mb-4 text-white group-hover:scale-110 transition-transform origin-left relative z-10">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
+                         </div>
+                         <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neonBlue transition-colors relative z-10">Ailabs Capcut</h3>
+                         <p class="text-xs text-gray-200 font-medium">Video editing suite.</p>
+                     </a>
+                 </div>
             </div>
 
             <!-- TAB CONTENT: TUTORIAL (ACTIVE LINK) -->
@@ -722,13 +752,13 @@
                 }
                 // If user slides to 0, show mute icon visual (optional logic)
                 if(val == 0) {
-                     iconSoundOn.classList.add('hidden');
-                     iconSoundOff.classList.remove('hidden');
+                      iconSoundOn.classList.add('hidden');
+                      iconSoundOff.classList.remove('hidden');
                 } else {
-                     if(!bgAudio.muted) {
+                      if(!bgAudio.muted) {
                         iconSoundOn.classList.remove('hidden');
                         iconSoundOff.classList.add('hidden');
-                     }
+                      }
                 }
             });
         }
@@ -751,10 +781,11 @@
 
 
         function switchTab(tab) {
-            ['content-apps', 'content-tutorial', 'content-framework', 'content-camera'].forEach(id => {
+            // Update daftar ID tab untuk menyertakan 'toolkit'
+            ['content-apps', 'content-toolkit', 'content-tutorial', 'content-framework', 'content-camera'].forEach(id => {
                 document.getElementById(id).classList.add('hidden');
             });
-            ['tab-apps', 'tab-tutorial', 'tab-framework', 'tab-camera'].forEach(id => {
+            ['tab-apps', 'tab-toolkit', 'tab-tutorial', 'tab-framework', 'tab-camera'].forEach(id => {
                 document.getElementById(id).classList.remove('active');
             });
             document.getElementById(`content-${tab}`).classList.remove('hidden');
