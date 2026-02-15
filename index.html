@@ -280,7 +280,7 @@
                 <button onclick="switchTab('camera')" id="tab-camera" class="tab-btn text-neonBlue border-neonBlue/30 hover:border-neonBlue">42 CAMERA MOVEMENTS</button>
             </div>
 
-            <!-- TAB CONTENT: APPLICATIONS (LENGKAP 14 APPS) -->
+            <!-- TAB CONTENT: APPLICATIONS -->
             <div id="content-apps">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
                     
@@ -350,8 +350,8 @@
                         <p class="text-xs text-gray-200 font-medium">Generasi gambar ultra.</p>
                     </a>
 
-                    <!-- 12. Ailabs Ramadhan Version -->
-                    <a href="https://gemini.google.com/share/bc6488a4b7f1" target="_blank" class="block app-card p-6 rounded-2xl group relative">
+                    <!-- 12. Ailabs Ramadhan Version (LINK UPDATED) -->
+                    <a href="https://gemini.google.com/share/6d9da68a2657" target="_blank" class="block app-card p-6 rounded-2xl group relative">
                         <div class="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded animate-pulse z-20 shadow-[0_0_8px_red]">NEW</div>
                         <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neonBlue transition-colors">Ailabs Ramadhan Version</h3>
                         <p class="text-xs text-gray-200 font-medium">Edisi spesial berkah.</p>
@@ -374,20 +374,18 @@
                 </div>
             </div>
 
-            <!-- TAB CONTENT: TOOLKIT (Pembaruan Link) -->
+            <!-- TAB CONTENT: TOOLKIT -->
             <div id="content-toolkit" class="hidden">
                  <div class="mb-6 flex items-center gap-4">
                      <h2 class="text-3xl font-tech font-bold text-white tracking-[0.2em]">TOOLS <span class="text-neonBlue">KREATIF</span></h2>
                      <div class="h-[2px] flex-1 bg-gradient-to-r from-neonBlue to-transparent"></div>
                  </div>
                  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
-                     <!-- 1. Manipulation Audio -->
                      <a href="https://audio-modifier.vercel.app/" target="_blank" class="block app-card p-6 rounded-2xl group relative overflow-hidden">
                          <div class="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded animate-pulse z-20 shadow-[0_0_8px_red]">NEW</div>
                          <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neonBlue transition-colors">Manipulation Audio</h3>
                          <p class="text-xs text-gray-200 font-medium">Advanced audio processing.</p>
                      </a>
-                     <!-- 2. Ailabs Capcut -->
                      <a href="https://ailabs-cc.vercel.app/" target="_blank" class="block app-card p-6 rounded-2xl group relative overflow-hidden">
                          <div class="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded animate-pulse z-20 shadow-[0_0_8px_red]">NEW</div>
                          <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neonBlue transition-colors">Ailabs Capcut</h3>
@@ -402,7 +400,7 @@
                     <div class="tutorial-card p-6 rounded-2xl flex flex-col justify-between">
                         <h3 class="text-xl font-bold text-white font-tech mb-4">Desain Cover AI</h3>
                         <p class="text-sm text-gray-300 mb-6">Panduan pembuatan cover profesional dengan AIlabs Studio Pro.</p>
-                        <a href="https://gemini.google.com/share/b6ce96b95d5a" target="_blank" class="btn-cyber py-3 rounded-xl text-center">BUKA TUTORIAL</a>
+                        <a href="https://gemini.google.com/share/b6ce96b95d5a" target="_blank" class="bg-neonOrange/20 border border-neonOrange text-neonOrange py-3 rounded-xl text-center hover:bg-neonOrange hover:text-black transition-all font-bold">BUKA TUTORIAL</a>
                     </div>
                 </div>
             </div>
@@ -427,7 +425,7 @@
                     <a href="https://aishotstudio.com/42-camera-movements-ai-prompts/" target="_blank" class="framework-card p-6 rounded-2xl border border-neonBlue/30 block group">
                         <h3 class="text-xl font-bold text-white font-tech mb-4 group-hover:text-neonBlue">42 Camera Movements</h3>
                         <p class="text-sm text-gray-300 mb-4">Panduan pergerakan kamera sinematik AI Video.</p>
-                        <button class="btn-cyber w-full py-2 rounded-lg text-xs">OPEN GUIDE</button>
+                        <button class="w-full py-2 rounded-lg text-xs font-bold border border-neonBlue text-neonBlue group-hover:bg-neonBlue group-hover:text-black transition-all">OPEN GUIDE</button>
                     </a>
                 </div>
             </div>
@@ -440,7 +438,7 @@
         <div class="relative glass-panel rounded-3xl p-8 max-w-lg w-full text-center border-t-2 border-neonBlue">
             <h2 class="text-2xl font-tech font-bold text-white mb-4">Akses Terverifikasi 👋</h2>
             <p class="text-gray-200 mb-8">Terima kasih telah bergabung di komunitas VIP AILabs.</p>
-            <button id="close-welcome-modal" class="btn-cyber w-full py-4 rounded-xl">Masuk Eksplorasi</button>
+            <button id="close-welcome-modal" class="w-full bg-neonBlue text-black py-4 rounded-xl font-bold tracking-widest hover:brightness-110 transition-all">Masuk Eksplorasi</button>
         </div>
     </div>
 
@@ -483,13 +481,17 @@
 
         function switchTab(tab) {
             ['content-apps', 'content-toolkit', 'content-tutorial', 'content-framework', 'content-camera'].forEach(id => {
-                document.getElementById(id).classList.add('hidden');
+                const el = document.getElementById(id);
+                if (el) el.classList.add('hidden');
             });
             ['tab-apps', 'tab-toolkit', 'tab-tutorial', 'tab-framework', 'tab-camera'].forEach(id => {
-                document.getElementById(id).classList.remove('active');
+                const el = document.getElementById(id);
+                if (el) el.classList.remove('active');
             });
-            document.getElementById(`content-${tab}`).classList.remove('hidden');
-            document.getElementById(`tab-${tab}`).classList.add('active');
+            const contentEl = document.getElementById(`content-${tab}`);
+            const tabEl = document.getElementById(`tab-${tab}`);
+            if (contentEl) contentEl.classList.remove('hidden');
+            if (tabEl) tabEl.classList.add('active');
         }
 
         function initExplorer() {
@@ -510,23 +512,28 @@
 
         function copyCurrentPrompt() {
             if(!currentPromptContent) return;
-            navigator.clipboard.writeText(currentPromptContent).then(() => {
-                const t = document.getElementById("toast"); t.className = "show";
-                setTimeout(() => t.className = "", 3000);
-            });
+            const tempInput = document.createElement("textarea");
+            tempInput.value = currentPromptContent;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            
+            const t = document.getElementById("toast"); 
+            t.className = "show";
+            setTimeout(() => t.className = "", 3000);
         }
 
         document.getElementById('login-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const pass = document.getElementById('password').value.trim();
             if (userDatabase["bangpro"].includes(pass)) {
-                // PAKAI sessionStorage AGAR PRIVASI AMAN (TUTUP TAB = LOGOUT)
                 sessionStorage.setItem('sessionToken', pass);
                 document.getElementById('login-page').classList.add('hidden');
                 document.getElementById('portal-page').classList.remove('hidden');
                 document.getElementById('welcome-modal').classList.remove('hidden');
                 initExplorer();
-                bgAudio.play().then(() => initVisualizer());
+                bgAudio.play().then(() => initVisualizer()).catch(() => {});
             } else {
                 document.getElementById('error-message').textContent = 'TOKEN INVALID!';
             }
@@ -557,7 +564,7 @@
                 document.getElementById('login-page').classList.add('hidden');
                 document.getElementById('portal-page').classList.remove('hidden');
                 initExplorer();
-                bgAudio.play().then(() => initVisualizer());
+                bgAudio.play().then(() => initVisualizer()).catch(() => {});
             }
         });
     </script>
