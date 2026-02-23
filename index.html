@@ -57,7 +57,8 @@
 
     <style>
         body {
-            background-color: #050110; 
+            /* Fallback gradient if foto-profil.png is missing */
+            background: #050110 radial-gradient(circle at center, #1a0b2e 0%, #050110 100%); 
             background-image: url('./foto-profil.png'); 
             background-size: cover;
             background-position: center center; 
@@ -79,17 +80,17 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle at 15% 15%, rgba(124, 58, 237, 0.05) 0%, transparent 50%),
                         radial-gradient(circle at 85% 85%, rgba(255, 153, 0, 0.05) 0%, transparent 50%),
-                        rgba(0, 0, 0, 0.1);
+                        rgba(0, 0, 0, 0.4); /* Slightly darkened for better readability without image */
             z-index: -1;
         }
 
         .glass-panel {
-            background: rgba(0, 0, 0, 0.05); 
-            backdrop-filter: blur(1px); 
-            -webkit-backdrop-filter: blur(1px);
+            background: rgba(10, 10, 15, 0.7); 
+            backdrop-filter: blur(8px); 
+            -webkit-backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.1); 
             border-top: 1px solid rgba(255, 255, 255, 0.2); 
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
         }
 
         .tab-btn {
@@ -100,46 +101,48 @@
             font-size: 0.7rem;
             letter-spacing: 2px;
             transition: all 0.3s ease;
-            color: rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.5);
             border: 2px solid rgba(255, 255, 255, 0.1);
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.6);
             border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             flex: 1;
+            min-width: 140px;
             max-width: 200px;
         }
 
         .tab-btn.active {
             color: #00ffd5;
             border: 2px solid #00ffd5;
+            background: rgba(0, 255, 213, 0.1);
             box-shadow: 0 0 15px rgba(0, 255, 213, 0.4), inset 0 0 10px rgba(0, 255, 213, 0.2);
             animation: flicker 4s linear infinite;
         }
 
         .app-card {
-            background: rgba(0, 0, 0, 0.15); 
-            backdrop-filter: blur(0px); 
-            border: 2px solid rgba(0, 255, 213, 0.5); 
-            box-shadow: 0 0 15px rgba(0, 255, 213, 0.15);
+            background: rgba(0, 0, 0, 0.4); 
+            backdrop-filter: blur(4px); 
+            border: 2px solid rgba(0, 255, 213, 0.3); 
+            box-shadow: 0 0 15px rgba(0, 255, 213, 0.1);
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
         }
         .app-card:hover {
             transform: translateY(-5px);
-            background: rgba(0, 0, 0, 0.4); 
+            background: rgba(0, 255, 213, 0.05); 
             border-color: #00ffd5;
             box-shadow: 0 0 30px rgba(0, 255, 213, 0.4), inset 0 0 10px rgba(0, 255, 213, 0.1);
         }
 
         .tutorial-card, .framework-card {
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(255, 153, 0, 0.3);
             transition: all 0.3s ease;
-            backdrop-filter: blur(2px);
+            backdrop-filter: blur(4px);
         }
         .tutorial-card:hover, .framework-card:hover {
             border-color: #FF9900;
@@ -166,15 +169,15 @@
             height: 600px;
             backdrop-filter: blur(10px);
         }
-        .explorer-sidebar { width: 280px; border-right: 1px solid rgba(255, 255, 255, 0.1); background: rgba(0, 0, 0, 0.3); display: flex; flex-direction: column; }
+        .explorer-sidebar { width: 280px; border-right: 1px solid rgba(255, 255, 255, 0.1); background: rgba(0, 0, 0, 0.5); display: flex; flex-direction: column; }
         .explorer-main { flex: 1; display: flex; flex-direction: column; background: #ffffff; }
         .file-item { padding: 12px 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: all 0.2s; border-bottom: 1px solid rgba(255, 255, 255, 0.05); color: rgba(255, 255, 255, 0.7); font-size: 0.8rem; }
         .file-item:hover { background: rgba(0, 255, 213, 0.1); color: #00ffd5; }
         .file-item.active { background: rgba(0, 255, 213, 0.15); color: #00ffd5; border-left: 4px solid #00ffd5; }
         .txt-header { background: #f1f5f9; padding: 10px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; color: #475569; font-size: 0.75rem; font-weight: 700; }
-        .txt-content { flex: 1; padding: 24px 32px; color: #0f172a; font-family: 'Fira Code', monospace; font-size: 0.95rem; line-height: 1.8; overflow-y: auto; white-space: pre-wrap; background-image: linear-gradient(#f8fafc 1.3rem, #e2e8f0 1.4rem); background-size: 100% 1.4rem; background-attachment: local; }
+        .txt-content { flex: 1; padding: 24px 32px; color: #0f172a; font-family: 'Fira Code', monospace; font-size: 0.95rem; line-height: 1.8; overflow-y: auto; white-space: pre-wrap; background-image: linear-gradient(#f8fafc 1.3rem, #e2e8f0 1.4rem); background-size: 100% 1.4rem; background-attachment: local; text-shadow: none; }
 
-        #toast { visibility: hidden; min-width: 250px; background-color: #00ffd5; color: black; text-align: center; border-radius: 8px; padding: 16px; position: fixed; z-index: 200; left: 50%; bottom: 30px; transform: translateX(-50%); font-family: 'Orbitron', sans-serif; font-weight: bold; box-shadow: 0 0 20px rgba(0, 255, 213, 0.5); }
+        #toast { visibility: hidden; min-width: 250px; background-color: #00ffd5; color: black; text-align: center; border-radius: 8px; padding: 16px; position: fixed; z-index: 200; left: 50%; bottom: 30px; transform: translateX(-50%); font-family: 'Orbitron', sans-serif; font-weight: bold; box-shadow: 0 0 20px rgba(0, 255, 213, 0.5); text-shadow: none; }
         #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
 
         @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
@@ -183,13 +186,14 @@
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(0, 255, 213, 0.5); }
     </style>
 </head>
 <body class="text-gray-100 min-h-screen flex items-center justify-center p-4 selection:bg-neonOrange selection:text-black">
 
     <!-- AUDIO PLAYER -->
     <audio id="bg-audio" loop crossorigin="anonymous">
-        <source src="backsound.mp3" type="audio/mpeg">
+        <source src="background-music.mp3" type="audio/mpeg">
     </audio>
 
     <div class="bg-overlay"></div>
@@ -204,12 +208,12 @@
                     <span class="text-2xl md:text-3xl tracking-[0.2em] text-white">WORKSPACE</span>
                 </h1>
                 <div class="h-px w-32 bg-gradient-to-r from-transparent via-neonBlue to-transparent mx-auto mb-6"></div>
-                <span class="inline-block bg-black/20 border border-white/20 text-neonBlue text-xs font-bold tracking-[0.25em] uppercase px-3 py-1 rounded-full">VIP Prime Access</span>
+                <span class="inline-block bg-black/40 border border-white/20 text-neonBlue text-xs font-bold tracking-[0.25em] uppercase px-3 py-1 rounded-full">VIP Prime Access</span>
             </div>
             
             <div class="mb-8">
                 <p class="text-xs text-neonBlue uppercase tracking-widest mb-2 ml-1 font-bold">User ID</p>
-                <div class="bg-black/30 border border-white/20 rounded-lg p-3 flex items-center justify-between">
+                <div class="bg-black/50 border border-white/20 rounded-lg p-3 flex items-center justify-between">
                     <span class="font-mono text-white font-bold tracking-wide text-lg">bangpro</span>
                     <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
                 </div>
@@ -218,7 +222,7 @@
             <div class="mb-10 text-center">
                 <label class="block text-xs text-neonOrange uppercase tracking-widest mb-4 font-bold">Security Token</label>
                 <input type="password" id="password" name="password" placeholder="ENTER CODE" required
-                       class="w-full p-4 border border-white/20 bg-black/30 rounded-lg text-center text-xl font-tech tracking-widest text-neonBlue focus:border-neonOrange outline-none">
+                       class="w-full p-4 border border-white/20 bg-black/50 rounded-lg text-center text-xl font-tech tracking-widest text-neonBlue focus:border-neonOrange outline-none">
             </div>
             
             <button type="submit" class="w-full bg-transparent border-2 border-neonBlue text-neonBlue py-4 rounded-lg font-bold text-lg tracking-wider hover:bg-neonBlue hover:text-black transition-all">INITIALIZE</button>
@@ -229,7 +233,7 @@
     <!-- 2. PORTAL DASHBOARD -->
     <div id="portal-page" class="w-full max-w-7xl p-4 hidden relative z-10">
         <!-- TOP NOTIFICATION BAR -->
-        <div class="bg-neonOrange/20 border-b border-neonOrange/50 p-3 rounded-t-3xl mb-4 flex items-center justify-center gap-3 backdrop-blur-sm">
+        <div class="bg-neonOrange/20 border-b border-neonOrange/50 p-3 rounded-t-3xl mb-4 flex items-center justify-center gap-3 backdrop-blur-md">
             <span class="flex h-3 w-3 relative">
                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-neonOrange opacity-75"></span>
                 <span class="relative inline-flex rounded-full h-3 w-3 bg-neonOrange"></span>
@@ -266,12 +270,12 @@
 
                         <!-- Sound Control + Visualizer -->
                         <div class="flex flex-col items-center gap-2 mr-2">
-                            <div class="flex items-center gap-2 bg-black/40 border border-white/10 px-3 py-1 rounded-lg">
+                            <div class="flex items-center gap-2 bg-black/60 border border-white/10 px-3 py-1 rounded-lg">
                                 <button id="sound-toggle" class="text-neonBlue hover:text-white transition-colors">
                                     <svg id="icon-sound-on" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
                                     <svg id="icon-sound-off" class="hidden" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
                                 </button>
-                                <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.5" class="w-16">
+                                <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.5" class="w-16 accent-neonBlue">
                             </div>
                             <!-- Visualizer Bars -->
                             <div id="visualizer" class="flex items-end justify-center gap-[2px] h-3 w-full opacity-60">
@@ -285,7 +289,7 @@
                         </div>
                         <button id="logout-button" class="text-[10px] text-red-400 border border-red-500/40 px-4 py-1.5 rounded font-bold hover:bg-red-500 hover:text-white transition-all">LOGOUT</button>
                     </div>
-                    <div class="bg-black/40 border border-white/10 rounded-lg px-3 py-2 flex items-center gap-3">
+                    <div class="bg-black/60 border border-white/10 rounded-lg px-3 py-2 flex items-center gap-3">
                         <span class="relative flex h-2 w-2">
                           <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
                           <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
@@ -473,7 +477,7 @@
                     <div class="explorer-main">
                         <div class="txt-header">
                             <span id="active-filename">Pilih file...</span>
-                            <button onclick="copyCurrentPrompt()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded text-[10px]">SALIN</button>
+                            <button onclick="copyCurrentPrompt()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded text-[10px] font-bold tracking-wide transition-colors">SALIN</button>
                         </div>
                         <div class="txt-content p-6 text-black" id="txt-display">Pilih prompt dari menu samping.</div>
                     </div>
@@ -602,14 +606,19 @@
         <div class="absolute inset-0 bg-black/95 backdrop-blur-xl"></div>
         <div class="relative glass-panel rounded-3xl p-8 max-w-lg w-full text-center border-t-4 border-neonOrange shadow-[0_0_50px_rgba(255,153,0,0.3)]">
             <div class="mb-6">
-                <div class="w-20 h-20 bg-neonOrange/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-neonOrange/30 overflow-hidden p-1">
-                    <img src="./logo.png" alt="Logo Komunitas" class="w-full h-full object-contain drop-shadow-[0_0_8px_rgba(255,153,0,0.8)]" onerror="this.style.display='none'">
+                <div class="w-20 h-20 bg-neonOrange/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-neonOrange/30 overflow-hidden p-3">
+                    <!-- Inline SVG replaced for logo.png fallback -->
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-neonOrange drop-shadow-[0_0_8px_rgba(255,153,0,0.8)]">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                 </div>
                 <h2 class="text-3xl font-tech font-bold text-white mb-2">PENGUMUMAN</h2>
                 <div class="h-1 w-20 bg-neonOrange mx-auto mb-6"></div>
             </div>
 
-            <div class="text-left space-y-4 mb-8 bg-black/40 p-5 rounded-2xl border border-white/10 font-sans">
+            <div class="text-left space-y-4 mb-8 bg-black/60 p-5 rounded-2xl border border-white/10 font-sans">
                 <p class="text-neonOrange font-bold text-sm tracking-widest uppercase">⚠️ PER 1 MARET 2026</p>
                 <p class="text-gray-200 text-sm leading-relaxed">
                     Kami memberitahukan bahwa seluruh fitur pada aplikasi <span class="text-neonBlue font-bold">Ailabs Workspace</span> akan dinonaktifkan untuk sementara waktu.
@@ -688,13 +697,54 @@
                 const div = document.createElement('div');
                 div.className = 'file-item';
                 div.innerHTML = `📄 ${file.name}`;
-                div.onclick = () => {
+                div.onclick = (e) => {
+                    // Remove active from all siblings
+                    document.querySelectorAll('.file-item').forEach(el => el.classList.remove('active'));
+                    // Add active to current
+                    e.currentTarget.classList.add('active');
+                    
                     document.getElementById('active-filename').innerText = file.name;
                     document.getElementById('txt-display').innerText = file.content;
                     currentPromptContent = file.content;
                 };
                 list.appendChild(div);
             });
+        }
+
+        // FUNGSI COPY PROMPT YANG SEBELUMNYA HILANG
+        function copyCurrentPrompt() {
+            if (!currentPromptContent) return;
+            
+            // Clipboard API (Modern browsers)
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(currentPromptContent).then(showToast).catch(err => fallbackCopyTextToClipboard(currentPromptContent));
+            } else {
+                fallbackCopyTextToClipboard(currentPromptContent);
+            }
+        }
+
+        function fallbackCopyTextToClipboard(text) {
+            var textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            textArea.style.left = "-999999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+
+            try {
+                var successful = document.execCommand('copy');
+                if (successful) showToast();
+            } catch (err) {
+                console.error('Fallback: Oops, unable to copy', err);
+            }
+            document.body.removeChild(textArea);
+        }
+
+        function showToast() {
+            const toast = document.getElementById("toast");
+            toast.className = "show";
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
         }
 
         document.getElementById('login-form').addEventListener('submit', (e) => {
@@ -726,6 +776,11 @@
             document.getElementById('icon-sound-on').classList.toggle('hidden', bgAudio.muted);
             document.getElementById('icon-sound-off').classList.toggle('hidden', !bgAudio.muted);
             if(!bgAudio.muted && audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+            
+            // Start audio if it wasn't playing due to browser autoplay policies
+            if (!bgAudio.muted && bgAudio.paused) {
+                bgAudio.play().then(() => initVisualizer()).catch(() => {});
+            }
         });
 
         document.getElementById('volume-slider').addEventListener('input', (e) => {
@@ -737,7 +792,8 @@
                 document.getElementById('login-page').classList.add('hidden');
                 document.getElementById('portal-page').classList.remove('hidden');
                 initExplorer();
-                bgAudio.play().then(() => initVisualizer()).catch(() => {});
+                // Audio is not auto-played here due to browser interaction policies
+                // The user must click the sound toggle to start it if they bypassed login via session.
             }
         });
     </script>
