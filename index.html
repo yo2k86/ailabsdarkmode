@@ -228,7 +228,16 @@
 
     <!-- 2. PORTAL DASHBOARD -->
     <div id="portal-page" class="w-full max-w-7xl p-4 hidden relative z-10">
-        <div class="glass-panel rounded-3xl p-6 md:p-10">
+        <!-- TOP NOTIFICATION BAR -->
+        <div class="bg-neonOrange/20 border-b border-neonOrange/50 p-3 rounded-t-3xl mb-4 flex items-center justify-center gap-3 backdrop-blur-sm">
+            <span class="flex h-3 w-3 relative">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-neonOrange opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-neonOrange"></span>
+            </span>
+            <p class="text-[11px] md:text-xs font-bold text-neonOrange tracking-widest uppercase">Pemberitahuan: Seluruh fitur Ailabs dinonaktifkan per 1 Maret 2026</p>
+        </div>
+
+        <div class="glass-panel rounded-b-3xl rounded-t-lg p-6 md:p-10">
             
             <!-- HEADER -->
             <div class="mb-8 border-b border-white/10 pb-6 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
@@ -361,7 +370,7 @@
                         <p class="text-xs text-gray-200 font-medium">Generasi gambar ultra.</p>
                     </a>
 
-                    <!-- 12. Ailabs Ramadhan Version (LINK UPDATED) -->
+                    <!-- 12. Ailabs Ramadhan Version -->
                     <a href="https://gemini.google.com/share/fa5bd00de5dd" target="_blank" class="block app-card p-6 rounded-2xl group relative">
                         <div class="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded animate-pulse z-20 shadow-[0_0_8px_red]">NEW</div>
                         <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neonBlue transition-colors">Ailabs Ramadhan Version</h3>
@@ -588,13 +597,37 @@
         </div>
     </div>
 
-    <!-- WELCOME MODAL -->
+    <!-- WELCOME MODAL + NOTIFICATION -->
     <div id="welcome-modal" class="hidden fixed inset-0 z-[150] flex items-center justify-center p-4">
-        <div class="absolute inset-0 bg-black/90 backdrop-blur-md"></div>
-        <div class="relative glass-panel rounded-3xl p-8 max-w-lg w-full text-center border-t-2 border-neonBlue">
-            <h2 class="text-2xl font-tech font-bold text-white mb-4">Akses Terverifikasi 👋</h2>
-            <p class="text-gray-200 mb-8">Terima kasih telah bergabung di komunitas VIP AILabs.</p>
-            <button id="close-welcome-modal" class="w-full bg-neonBlue text-black py-4 rounded-xl font-bold tracking-widest hover:brightness-110 transition-all">Masuk Eksplorasi</button>
+        <div class="absolute inset-0 bg-black/95 backdrop-blur-xl"></div>
+        <div class="relative glass-panel rounded-3xl p-8 max-w-lg w-full text-center border-t-4 border-neonOrange shadow-[0_0_50px_rgba(255,153,0,0.3)]">
+            <div class="mb-6">
+                <div class="w-20 h-20 bg-neonOrange/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-neonOrange/30">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-neonOrange" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                </div>
+                <h2 class="text-3xl font-tech font-bold text-white mb-2">PENGUMUMAN</h2>
+                <div class="h-1 w-20 bg-neonOrange mx-auto mb-6"></div>
+            </div>
+
+            <div class="text-left space-y-4 mb-8 bg-black/40 p-5 rounded-2xl border border-white/10 font-sans">
+                <p class="text-neonOrange font-bold text-sm tracking-widest uppercase">⚠️ PER 1 MARET 2026</p>
+                <p class="text-gray-200 text-sm leading-relaxed">
+                    Kami memberitahukan bahwa seluruh fitur pada aplikasi <span class="text-neonBlue font-bold">Ailabs Workspace</span> akan dinonaktifkan untuk sementara waktu.
+                </p>
+                <div class="border-l-2 border-neonOrange pl-4 py-1">
+                    <p class="text-gray-400 text-xs italic">
+                        "Penonaktifan ini dilakukan untuk keperluan <span class="text-white">maintenance besar-besaran dan pengembangan sistem</span> demi menghadirkan fitur yang lebih stabil, canggih, dan aman bagi seluruh pengguna VIP."
+                    </p>
+                </div>
+                <p class="text-gray-300 text-xs">
+                    Kami memohon maaf yang sebesar-besarnya atas ketidaknyamanan yang ditimbulkan selama proses pengembangan ini berlangsung.
+                </p>
+            </div>
+
+            <button id="close-welcome-modal" class="w-full bg-neonOrange text-black py-4 rounded-xl font-bold tracking-[0.2em] hover:brightness-125 transition-all shadow-[0_0_20px_rgba(255,153,0,0.4)]">SAYA MENGERTI & LANJUT</button>
+            <p class="mt-4 text-[10px] text-gray-400 font-mono italic">Salam dari Development Bang Pro</p>
         </div>
     </div>
 
@@ -606,7 +639,6 @@
         const bgAudio = document.getElementById("bg-audio");
         bgAudio.volume = 0.5;
 
-        // Visualizer State
         let audioCtx, analyser, dataArray, isInit = false;
 
         function initVisualizer() {
@@ -652,6 +684,7 @@
 
         function initExplorer() {
             const list = document.getElementById('file-list');
+            if(!list) return;
             list.innerHTML = '';
             frameworkFiles.forEach(file => {
                 const div = document.createElement('div');
@@ -664,20 +697,6 @@
                 };
                 list.appendChild(div);
             });
-        }
-
-        function copyCurrentPrompt() {
-            if(!currentPromptContent) return;
-            const tempInput = document.createElement("textarea");
-            tempInput.value = currentPromptContent;
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            document.execCommand("copy");
-            document.body.removeChild(tempInput);
-            
-            const t = document.getElementById("toast"); 
-            t.className = "show";
-            setTimeout(() => t.className = "", 3000);
         }
 
         document.getElementById('login-form').addEventListener('submit', (e) => {
