@@ -19,7 +19,7 @@ const funnyResults = [
   },
   {
     title: "KONEKSI GA NYAMPE 🤣",
-    desc: "Sistem mendeteksi lu cuma rakyat jelata yang kalau beli barang online selalu nungguin event gratis ongkir."
+    desc: "Sistem mendeteksi aura sobat diskonan yang kalau beli barang online selalu nungguin event gratis ongkir."
   },
   {
     title: "KORBAN GHOSTING HRD 🤣",
@@ -28,7 +28,7 @@ const funnyResults = [
 ];
 
 // Kode HTML Abang dimasukkan ke sini persis sama. 
-// Tanda \ (backslash) hanya untuk mencegah error di Javascript (Escape String).
+// Tanda \ (backslash) ditambahkan pada penutup script <\/script> untuk mencegah error render di Vercel.
 const workspaceHTML = `<!DOCTYPE html>
 <html lang="id">
 <head>
@@ -36,7 +36,7 @@ const workspaceHTML = `<!DOCTYPE html>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ailabs Workspace</title>
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"><\/script>
     <!-- Font Inter, Orbitron, & Fira Code -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@500;700;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     
@@ -84,7 +84,7 @@ const workspaceHTML = `<!DOCTYPE html>
                 }
             }
         }
-    </script>
+    <\/script>
 
     <style>
         body {
@@ -827,7 +827,7 @@ const workspaceHTML = `<!DOCTYPE html>
                 // The user must click the sound toggle to start it if they bypassed login via session.
             }
         });
-    </script>
+    <\/script>
 </body>
 </html>`;
 
