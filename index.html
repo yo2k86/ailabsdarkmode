@@ -1,42 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
-
-const funnyResults = [
-  {
-    title: "STATUS: BEBAN KELUARGA 🤣",
-    desc: "Sistem menolak memindai. Daripada nyari orang dalam, mending kamu mandi dulu sana, bangunnya kesiangan terus."
-  },
-  {
-    title: "STATUS: KAUM REBAHAN 🤣",
-    desc: "Jari lu terlalu lemes buat di-scan. Mending bangun dari kasur, lipet selimut, abis itu bantuin emak nyapu gih."
-  },
-  {
-    title: "AURA TANGGAL TUA 🤣",
-    desc: "Mesinnya error nih, gatau kenapa tiba-tiba nyium bau dompet tipis yang isinya cuma struk minimarket."
-  },
-  {
-    title: "PRIVILESE DITOLAK 🤣",
-    desc: "Boro-boro punya orang dalam, chat di grup keluarga aja lu sering dikacangin. Udah sana mending ngopi dulu."
-  },
-  {
-    title: "KONEKSI GA NYAMPE 🤣",
-    desc: "Sistem mendeteksi aura sobat diskonan yang kalau beli barang online selalu nungguin event gratis ongkir."
-  },
-  {
-    title: "KORBAN GHOSTING HRD 🤣",
-    desc: "Daripada nyari jalur VIP, mending lu cek email deh. Siapa tau lamaran lu yang bulan lalu udah dibales."
-  }
-];
-
-// Kode HTML Abang dimasukkan ke sini persis sama. 
-// Tanda \ (backslash) ditambahkan pada penutup script <\/script> untuk mencegah error render di Vercel.
-const workspaceHTML = `<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ailabs Workspace</title>
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"><\/script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Inter, Orbitron, & Fira Code -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@500;700;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     
@@ -84,7 +53,7 @@ const workspaceHTML = `<!DOCTYPE html>
                 }
             }
         }
-    <\/script>
+    </script>
 
     <style>
         body {
@@ -701,7 +670,7 @@ const workspaceHTML = `<!DOCTYPE html>
             const bars = document.querySelectorAll('.v-bar');
             bars.forEach((bar, i) => {
                 const h = (dataArray[i] / 255) * 12;
-                bar.style.height = \`\${Math.max(2, h)}px\`;
+                bar.style.height = `${Math.max(2, h)}px`;
             });
         }
 
@@ -714,8 +683,8 @@ const workspaceHTML = `<!DOCTYPE html>
                 const el = document.getElementById(id);
                 if (el) el.classList.remove('active');
             });
-            const contentEl = document.getElementById(\`content-\${tab}\`);
-            const tabEl = document.getElementById(\`tab-\${tab}\`);
+            const contentEl = document.getElementById(`content-${tab}`);
+            const tabEl = document.getElementById(`tab-${tab}`);
             if (contentEl) contentEl.classList.remove('hidden');
             if (tabEl) tabEl.classList.add('active');
         }
@@ -727,7 +696,7 @@ const workspaceHTML = `<!DOCTYPE html>
             frameworkFiles.forEach(file => {
                 const div = document.createElement('div');
                 div.className = 'file-item';
-                div.innerHTML = \`📄 \${file.name}\`;
+                div.innerHTML = `📄 ${file.name}`;
                 div.onclick = (e) => {
                     // Remove active from all siblings
                     document.querySelectorAll('.file-item').forEach(el => el.classList.remove('active'));
@@ -827,214 +796,6 @@ const workspaceHTML = `<!DOCTYPE html>
                 // The user must click the sound toggle to start it if they bypassed login via session.
             }
         });
-    <\/script>
+    </script>
 </body>
-</html>`;
-
-export default function App() {
-  const [progress, setProgress] = useState(0);
-  const [status, setStatus] = useState('idle'); // 'idle', 'scanning', 'rejected'
-  const [showWorkspace, setShowWorkspace] = useState(false);
-  const [scanResult, setScanResult] = useState(funnyResults[0]);
-  const intervalRef = useRef(null);
-  const scanCountRef = useRef(0); // Tambahan: Untuk mendeteksi urutan scan
-
-  useEffect(() => {
-    return () => clearInterval(intervalRef.current);
-  }, []);
-
-  const startScan = () => {
-    if (status === 'scanning' || status === 'rejected') return;
-    
-    setStatus('scanning');
-    setProgress(0);
-    clearInterval(intervalRef.current);
-    
-    intervalRef.current = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(intervalRef.current);
-          
-          // Logika: Scan pertama PASTI index 0 (Beban Keluarga). Setelahnya baru random.
-          if (scanCountRef.current === 0) {
-            setScanResult(funnyResults[0]);
-          } else {
-            const randomIndex = Math.floor(Math.random() * funnyResults.length);
-            setScanResult(funnyResults[randomIndex]);
-          }
-          scanCountRef.current += 1; // Hitungan scan bertambah
-          
-          setStatus('rejected'); 
-          return 100;
-        }
-        return prev + 0.2; 
-      });
-    }, 30);
-  };
-
-  const resetScan = () => {
-    setStatus('idle');
-    setProgress(0);
-  };
-
-  const getScanningText = (prog) => {
-    if (prog < 15) return "Memindai NIK KTP...";
-    if (prog < 30) return "Mencari relasi pejabat di KONOHA...";
-    if (prog < 45) return "Mengecek saldo rekening ANDA...";
-    if (prog < 60) return "Menganalisis mutasi paylater...";
-    if (prog < 80) return "Memverifikasi \"DEKENGAN PUSAT\"...";
-    if (prog < 100) return "Mencari pamong praja di grup WA keluarga...";
-    return "Pemindaian selesai...";
-  };
-
-  // Tampilkan Workspace Bang Pro 
-  if (showWorkspace) {
-    return (
-      <iframe 
-        srcDoc={workspaceHTML} 
-        className="fixed inset-0 w-full h-full border-none z-50 bg-[#050110]" 
-        title="Ailabs Workspace"
-        allow="autoplay; clipboard-write; clipboard-read; encrypted-media; picture-in-picture; microphone"
-      />
-    );
-  }
-
-  let currentMessage = "Tahan sidik jari untuk memindai privilese.";
-  let borderColor = "border-teal-400";
-  let bgColor = "bg-teal-400/10";
-  let textColor = "text-teal-400";
-  let shadowColor = "shadow-[0_0_20px_rgba(45,212,191,0.3)]";
-  let fingerprintColor = "#ffffff";
-
-  if (status === 'scanning') {
-    currentMessage = `${getScanningText(progress)} ${Math.floor(progress)}%`;
-    borderColor = "border-teal-300";
-    textColor = "text-teal-300";
-    fingerprintColor = "#4fd1c5";
-    shadowColor = "shadow-[0_0_25px_rgba(45,212,191,0.5)]";
-  }
-
-  return (
-    <div className="min-h-screen bg-[#171821] flex flex-col items-center justify-center font-sans select-none relative overflow-hidden">
-      
-      <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(transparent_50%,rgba(0,0,0,0.15)_50%)] bg-[length:100%_4px] z-0"></div>
-
-      <div className="z-10 flex flex-col items-center w-full max-w-2xl px-6">
-        
-        {status === 'rejected' ? (
-          <div className="w-full flex flex-col gap-5 animate-[fadeIn_0.6s_ease-out]">
-            <div className="border-[3px] border-teal-400/80 rounded-2xl py-4 flex justify-center items-center shadow-[0_0_15px_rgba(45,212,191,0.2)] bg-teal-400/5">
-              <h2 className="text-teal-400 font-bold text-xl md:text-2xl tracking-[0.1em] uppercase">Pemindaian Selesai</h2>
-            </div>
-
-            <div className="border-[3px] border-rose-400/80 rounded-3xl p-8 flex flex-col items-center shadow-[0_0_25px_rgba(251,113,133,0.15)] bg-rose-400/5 mt-2">
-              <svg className="w-16 h-16 text-rose-400 mb-5 drop-shadow-[0_0_10px_rgba(251,113,133,0.5)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
-                <path d="M12 9v4"/><path d="M12 17h.01"/>
-              </svg>
-              
-              <h2 className="text-rose-400 font-bold text-2xl md:text-3xl mb-5 tracking-wide drop-shadow-md text-center">
-                {scanResult.title}
-              </h2>
-              
-              <p className="text-white text-center text-lg md:text-xl leading-relaxed font-medium">
-                {scanResult.desc}
-              </p>
-            </div>
-
-            <div className="flex flex-col gap-4 mt-3">
-              <button onClick={resetScan} className="w-full border-[3px] border-teal-400/80 rounded-full py-4 flex justify-center items-center gap-3 text-teal-400 font-bold text-lg md:text-xl tracking-wider hover:bg-teal-400/10 transition-colors shadow-[0_0_15px_rgba(45,212,191,0.1)] active:scale-95">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
-                SCAN ULANG REALITA
-              </button>
-              
-              <button onClick={() => setShowWorkspace(true)} className="w-full bg-[#ffb3c6] rounded-full py-4 flex justify-center items-center gap-3 text-rose-950 font-extrabold text-lg md:text-xl tracking-wider hover:bg-[#ffa0b8] transition-colors shadow-[0_0_20px_rgba(251,113,133,0.4)] active:scale-95">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-                GUNAKAN JALUR BELAKANG
-              </button>
-            </div>
-          </div>
-        ) : (
-          <>
-            <h1 className="text-2xl md:text-4xl font-extrabold text-white mb-16 text-center tracking-widest drop-shadow-md">
-              Ailabs ORDAL BIOMETRIK SCANNER
-            </h1>
-
-            <div className={`transition-all duration-300 border-2 rounded-xl px-6 py-4 md:px-12 md:py-6 mb-20 w-full text-center ${borderColor} ${bgColor} ${shadowColor}`}>
-              <p className={`text-base md:text-xl font-bold tracking-wide transition-all duration-300 ${textColor}`}>
-                {currentMessage}
-              </p>
-            </div>
-
-            <div 
-              className="relative flex items-center justify-center group touch-none w-36 h-36 md:w-48 md:h-48"
-              onClick={startScan}
-            >
-              <div 
-                className="absolute rounded-full blur-3xl transition-all duration-200"
-                style={{
-                  width: '150%',
-                  height: '150%',
-                  backgroundColor: '#2dd4bf',
-                  opacity: status === 'scanning' ? (progress / 100) * 0.4 : 0,
-                  transform: `scale(${1 + (progress / 100) * 0.5})`
-                }}
-              />
-
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke={fingerprintColor} 
-                strokeWidth="1.2" 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                className={`w-full h-full relative z-10 transition-colors duration-300 cursor-pointer hover:scale-105 active:scale-95 ${status === 'scanning' ? 'animate-pulse' : ''}`}
-              >
-                <path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4" />
-                <path d="M14 13.12c0 2.38 0 6.38-1 8.88" />
-                <path d="M17.29 21.02c.12-.6.43-2.3.5-3.02" />
-                <path d="M2 12a10 10 0 0 1 18-6" />
-                <path d="M2 16h.01" />
-                <path d="M21.8 16c.2-2 .131-5.354 0-6" />
-                <path d="M5 19.5C5.5 18 6 15 6 12a6 6 0 0 1 .34-2" />
-                <path d="M8.65 22c.21-.66.45-1.32.57-2" />
-                <path d="M9 6.8a6 6 0 0 1 9 5.2v2" />
-              </svg>
-
-              {status === 'scanning' && (
-                <>
-                  <style>
-                    {`
-                      @keyframes scan-laser {
-                        0% { top: -5%; opacity: 0; }
-                        10% { opacity: 1; }
-                        90% { opacity: 1; }
-                        100% { top: 105%; opacity: 0; }
-                      }
-                      .animate-scan-laser {
-                        animation: scan-laser 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
-                      }
-                      @keyframes fadeIn {
-                        from { opacity: 0; transform: translateY(10px); }
-                        to { opacity: 1; transform: translateY(0); }
-                      }
-                    `}
-                  </style>
-                  <div className="absolute left-0 right-0 h-[3px] bg-teal-200 shadow-[0_0_20px_6px_#2dd4bf] z-20 animate-scan-laser rounded-full pointer-events-none"></div>
-                </>
-              )}
-            </div>
-
-            <div className="mt-24 h-12 flex items-center justify-center">
-              <p className="text-gray-300 text-sm md:text-base font-semibold tracking-wide">
-                Klik atau sentuh tombol sidik jari satu kali untuk memulai.
-              </p>
-            </div>
-          </>
-        )}
-
-      </div>
-    </div>
-  );
-}
+</html>
