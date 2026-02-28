@@ -1,801 +1,218 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ailabs Workspace</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Inter, Orbitron, & Fira Code -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@500;700;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        tech: ['Orbitron', 'sans-serif'],
-                        mono: ['Fira Code', 'monospace'],
-                    },
-                    colors: {
-                        neonBlue: '#00ffd5',
-                        neonOrange: '#FF9900',
-                        deepDark: '#050110',
-                        accentPurple: '#7c3aed'
-                    },
-                    animation: {
-                        'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'glow-pulse': 'glowPulse 2s infinite',
-                        'float': 'float 6s ease-in-out infinite',
-                        'neon-flicker': 'flicker 3s linear infinite',
-                    },
-                    keyframes: {
-                        glowPulse: {
-                            '0%, 100%': { boxShadow: '0 0 5px #00ffd5', filter: 'brightness(1)' },
-                            '50%': { boxShadow: '0 0 20px #00ffd5', filter: 'brightness(1.2)' },
-                        },
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' },
-                        },
-                        flicker: {
-                             '0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100%': {
-                                opacity: 0.99,
-                                filter: 'drop-shadow(0 0 1px rgba(0,255,213,1))'
-                            },
-                            '20%, 21.999%, 63%, 63.999%, 65%, 69.999%': {
-                                opacity: 0.4,
-                                filter: 'none'
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-
-    <style>
-        body {
-            /* Fallback gradient if foto-profil.png is missing */
-            background: #050110 radial-gradient(circle at center, #1a0b2e 0%, #050110 100%); 
-            background-image: url('./foto-profil.png'); 
-            background-size: cover;
-            background-position: center center; 
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            overflow-x: hidden;
-            text-shadow: 0 2px 8px rgba(0,0,0,1); 
-        }
-
-        @media (max-width: 768px) {
-            body {
-                background-size: contain; 
-                background-position: top center; 
-                background-attachment: fixed; 
-            }
-        }
-
-        .bg-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 15% 15%, rgba(124, 58, 237, 0.05) 0%, transparent 50%),
-                        radial-gradient(circle at 85% 85%, rgba(255, 153, 0, 0.05) 0%, transparent 50%),
-                        rgba(0, 0, 0, 0.4); /* Slightly darkened for better readability without image */
-            z-index: -1;
-        }
-
-        .glass-panel {
-            background: rgba(10, 10, 15, 0.7); 
-            backdrop-filter: blur(8px); 
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            border-top: 1px solid rgba(255, 255, 255, 0.2); 
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .tab-btn {
-            position: relative;
-            padding: 10px 15px;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            font-size: 0.7rem;
-            letter-spacing: 2px;
-            transition: all 0.3s ease;
-            color: rgba(255, 255, 255, 0.5);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            background: rgba(0, 0, 0, 0.6);
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            flex: 1;
-            min-width: 140px;
-            max-width: 200px;
-        }
-
-        .tab-btn.active {
-            color: #00ffd5;
-            border: 2px solid #00ffd5;
-            background: rgba(0, 255, 213, 0.1);
-            box-shadow: 0 0 15px rgba(0, 255, 213, 0.4), inset 0 0 10px rgba(0, 255, 213, 0.2);
-            animation: flicker 4s linear infinite;
-        }
-
-        .app-card {
-            background: rgba(0, 0, 0, 0.4); 
-            backdrop-filter: blur(4px); 
-            border: 2px solid rgba(0, 255, 213, 0.3); 
-            box-shadow: 0 0 15px rgba(0, 255, 213, 0.1);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .app-card:hover {
-            transform: translateY(-5px);
-            background: rgba(0, 255, 213, 0.05); 
-            border-color: #00ffd5;
-            box-shadow: 0 0 30px rgba(0, 255, 213, 0.4), inset 0 0 10px rgba(0, 255, 213, 0.1);
-        }
-
-        .tutorial-card, .framework-card {
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 153, 0, 0.3);
-            transition: all 0.3s ease;
-            backdrop-filter: blur(4px);
-        }
-        .tutorial-card:hover, .framework-card:hover {
-            border-color: #FF9900;
-            box-shadow: 0 0 20px rgba(255, 153, 0, 0.2);
-            transform: translateY(-4px);
-        }
-
-        /* Audio Visualizer Style */
-        .v-bar {
-            width: 4px;
-            background: #00ffd5;
-            border-radius: 2px 2px 0 0;
-            box-shadow: 0 0 5px #00ffd5;
-            transition: height 0.08s ease;
-        }
-
-        /* Explorer Style */
-        .explorer-container {
-            background: rgba(15, 15, 25, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            overflow: hidden;
-            display: flex;
-            height: 600px;
-            backdrop-filter: blur(10px);
-        }
-        .explorer-sidebar { width: 280px; border-right: 1px solid rgba(255, 255, 255, 0.1); background: rgba(0, 0, 0, 0.5); display: flex; flex-direction: column; }
-        .explorer-main { flex: 1; display: flex; flex-direction: column; background: #ffffff; }
-        .file-item { padding: 12px 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: all 0.2s; border-bottom: 1px solid rgba(255, 255, 255, 0.05); color: rgba(255, 255, 255, 0.7); font-size: 0.8rem; }
-        .file-item:hover { background: rgba(0, 255, 213, 0.1); color: #00ffd5; }
-        .file-item.active { background: rgba(0, 255, 213, 0.15); color: #00ffd5; border-left: 4px solid #00ffd5; }
-        .txt-header { background: #f1f5f9; padding: 10px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; color: #475569; font-size: 0.75rem; font-weight: 700; }
-        .txt-content { flex: 1; padding: 24px 32px; color: #0f172a; font-family: 'Fira Code', monospace; font-size: 0.95rem; line-height: 1.8; overflow-y: auto; white-space: pre-wrap; background-image: linear-gradient(#f8fafc 1.3rem, #e2e8f0 1.4rem); background-size: 100% 1.4rem; background-attachment: local; text-shadow: none; }
-
-        #toast { visibility: hidden; min-width: 250px; background-color: #00ffd5; color: black; text-align: center; border-radius: 8px; padding: 16px; position: fixed; z-index: 200; left: 50%; bottom: 30px; transform: translateX(-50%); font-family: 'Orbitron', sans-serif; font-weight: bold; box-shadow: 0 0 20px rgba(0, 255, 213, 0.5); text-shadow: none; }
-        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
-
-        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
-        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
-
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(0, 255, 213, 0.5); }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ordal Scanner</title>
+  
+  <!-- Memuat Tailwind CSS langsung dari browser -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Memuat React dan Babel agar kode JSX bisa jalan di browser -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
-<body class="text-gray-100 min-h-screen flex items-center justify-center p-4 selection:bg-neonOrange selection:text-black">
+<body>
+  <!-- Wadah untuk aplikasi React -->
+  <div id="root"></div>
 
-    <!-- AUDIO PLAYER -->
-    <audio id="bg-audio" loop crossorigin="anonymous">
-        <source src="background-music.mp3" type="audio/mpeg">
-    </audio>
+  <!-- Kode React Kamu -->
+  <script type="text/babel">
+    const { useState, useRef, useEffect } = React;
 
-    <div class="bg-overlay"></div>
-    <div id="toast">Prompt Berhasil Disalin!</div>
+    function App() {
+      const [progress, setProgress] = useState(0);
+      const [status, setStatus] = useState('idle'); // 'idle', 'scanning', 'rejected'
+      const intervalRef = useRef(null);
 
-    <!-- 1. LOGIN PAGE -->
-    <div id="login-page" class="w-full max-w-md relative z-10">
-        <form id="login-form" class="glass-panel rounded-2xl p-10 relative overflow-hidden">
-            <div class="text-center mb-12">
-                <h1 class="text-4xl md:text-5xl font-tech font-bold text-white mb-3 tracking-wider leading-tight">
-                    <span class="text-neonOrange">AI</span>LABS<br>
-                    <span class="text-2xl md:text-3xl tracking-[0.2em] text-white">WORKSPACE</span>
+      // Membersihkan interval saat komponen dibongkar
+      useEffect(() => {
+        return () => clearInterval(intervalRef.current);
+      }, []);
+
+      const startScan = () => {
+        // Jangan lakukan apa-apa jika sedang memindai atau sudah dalam status ditolak
+        if (status === 'scanning' || status === 'rejected') return;
+        
+        setStatus('scanning');
+        setProgress(0);
+        clearInterval(intervalRef.current);
+        
+        intervalRef.current = setInterval(() => {
+          setProgress((prev) => {
+            if (prev >= 100) {
+              clearInterval(intervalRef.current);
+              setStatus('rejected'); // Mengubah status menjadi ditolak
+              return 100;
+            }
+            // Angka ditambah 0.2 setiap 30 milidetik
+            return prev + 0.2; 
+          });
+        }, 30);
+      };
+
+      const resetScan = () => {
+        setStatus('idle');
+        setProgress(0);
+      };
+
+      // Logika untuk teks loading yang dinamis dan lucu
+      const getScanningText = (prog) => {
+        if (prog < 15) return "Memindai NIK KTP...";
+        if (prog < 30) return "Mencari relasi pejabat di KONOHA...";
+        if (prog < 45) return "Mengecek saldo rekening ANDA...";
+        if (prog < 60) return "Menganalisis mutasi paylater...";
+        if (prog < 80) return "Memverifikasi \"DEKENGAN PUSAT\"...";
+        if (prog < 100) return "Mencari pamong praja di grup WA keluarga...";
+        return "Pemindaian selesai...";
+      };
+
+      // Konfigurasi tampilan
+      let currentMessage = "Tahan sidik jari untuk memindai privilese.";
+      let borderColor = "border-teal-400";
+      let bgColor = "bg-teal-400/10";
+      let textColor = "text-teal-400";
+      let shadowColor = "shadow-[0_0_20px_rgba(45,212,191,0.3)]";
+      let fingerprintColor = "#ffffff";
+
+      if (status === 'scanning') {
+        currentMessage = `${getScanningText(progress)} ${Math.floor(progress)}%`;
+        borderColor = "border-teal-300";
+        textColor = "text-teal-300";
+        fingerprintColor = "#4fd1c5";
+        shadowColor = "shadow-[0_0_25px_rgba(45,212,191,0.5)]";
+      }
+
+      return (
+        <div className="min-h-screen bg-[#171821] flex flex-col items-center justify-center font-sans select-none relative overflow-hidden">
+          
+          {/* Efek Garis Scan CRT */}
+          <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(transparent_50%,rgba(0,0,0,0.15)_50%)] bg-[length:100%_4px] z-0"></div>
+
+          <div className="z-10 flex flex-col items-center w-full max-w-2xl px-6">
+            
+            {status === 'rejected' ? (
+              <div className="w-full flex flex-col gap-5 animate-[fadeIn_0.6s_ease-out]">
+                {/* PEMINDAIAN SELESAI */}
+                <div className="border-[3px] border-teal-400/80 rounded-2xl py-4 flex justify-center items-center shadow-[0_0_15px_rgba(45,212,191,0.2)] bg-teal-400/5">
+                  <h2 className="text-teal-400 font-bold text-xl md:text-2xl tracking-[0.1em] uppercase">Pemindaian Selesai</h2>
+                </div>
+
+                {/* STATUS: BEBAN KELUARGA */}
+                <div className="border-[3px] border-rose-400/80 rounded-3xl p-8 flex flex-col items-center shadow-[0_0_25px_rgba(251,113,133,0.15)] bg-rose-400/5 mt-2">
+                  <svg className="w-16 h-16 text-rose-400 mb-5 drop-shadow-[0_0_10px_rgba(251,113,133,0.5)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
+                    <path d="M12 9v4"/><path d="M12 17h.01"/>
+                  </svg>
+                  
+                  <h2 className="text-rose-400 font-bold text-2xl md:text-3xl mb-5 tracking-wide drop-shadow-md text-center">STATUS: BEBAN KELUARGA 🤣</h2>
+                  
+                  <p className="text-white text-center text-lg md:text-xl leading-relaxed font-medium">
+                    Sistem menolak memindai. Daripada nyari orang dalam, mending kamu mandi dulu sana, bangunnya kesiangan terus.
+                  </p>
+                </div>
+
+                {/* Tombol Aksi */}
+                <div className="flex flex-col gap-4 mt-3">
+                  <button onClick={resetScan} className="w-full border-[3px] border-teal-400/80 rounded-full py-4 flex justify-center items-center gap-3 text-teal-400 font-bold text-lg md:text-xl tracking-wider hover:bg-teal-400/10 transition-colors shadow-[0_0_15px_rgba(45,212,191,0.1)] active:scale-95">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
+                    SCAN ULANG REALITA
+                  </button>
+                  
+                  <button onClick={() => window.open('https://ailabsdarkmode.vercel.app/', '_blank', 'noopener,noreferrer')} className="w-full bg-[#ffb3c6] rounded-full py-4 flex justify-center items-center gap-3 text-rose-950 font-extrabold text-lg md:text-xl tracking-wider hover:bg-[#ffa0b8] transition-colors shadow-[0_0_20px_rgba(251,113,133,0.4)] active:scale-95">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    GUNAKAN JALUR BELAKANG
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <>
+                <h1 className="text-2xl md:text-4xl font-extrabold text-white mb-16 text-center tracking-widest drop-shadow-md">
+                  Ailabs ORDAL BIOMETRIK SCANNER
                 </h1>
-                <div class="h-px w-32 bg-gradient-to-r from-transparent via-neonBlue to-transparent mx-auto mb-6"></div>
-                <span class="inline-block bg-black/40 border border-white/20 text-neonBlue text-xs font-bold tracking-[0.25em] uppercase px-3 py-1 rounded-full">VIP Prime Access</span>
-            </div>
-            
-            <div class="mb-8">
-                <p class="text-xs text-neonBlue uppercase tracking-widest mb-2 ml-1 font-bold">User ID</p>
-                <div class="bg-black/50 border border-white/20 rounded-lg p-3 flex items-center justify-between">
-                    <span class="font-mono text-white font-bold tracking-wide text-lg">bangpro</span>
-                    <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                </div>
-            </div>
-            
-            <div class="mb-10 text-center">
-                <label class="block text-xs text-neonOrange uppercase tracking-widest mb-4 font-bold">Security Token</label>
-                <input type="password" id="password" name="password" placeholder="ENTER CODE" required
-                       class="w-full p-4 border border-white/20 bg-black/50 rounded-lg text-center text-xl font-tech tracking-widest text-neonBlue focus:border-neonOrange outline-none">
-            </div>
-            
-            <button type="submit" class="w-full bg-transparent border-2 border-neonBlue text-neonBlue py-4 rounded-lg font-bold text-lg tracking-wider hover:bg-neonBlue hover:text-black transition-all">INITIALIZE</button>
-            <p id="error-message" class="text-red-400 text-center mt-6 text-xs font-mono min-h-[20px]"></p>
-        </form>
-    </div>
 
-    <!-- 2. PORTAL DASHBOARD -->
-    <div id="portal-page" class="w-full max-w-7xl p-4 hidden relative z-10">
-        <!-- TOP NOTIFICATION BAR -->
-        <div class="bg-neonOrange/20 border-b border-neonOrange/50 p-3 rounded-t-3xl mb-4 flex items-center justify-center gap-3 backdrop-blur-md">
-            <span class="flex h-3 w-3 relative">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-neonOrange opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-3 w-3 bg-neonOrange"></span>
-            </span>
-            <p class="text-[11px] md:text-xs font-bold text-neonOrange tracking-widest uppercase">Pemberitahuan: Seluruh fitur Ailabs dinonaktifkan per 1 Maret 2026</p>
+                <div className={`transition-all duration-300 border-2 rounded-xl px-6 py-4 md:px-12 md:py-6 mb-20 w-full text-center ${borderColor} ${bgColor} ${shadowColor}`}>
+                  <p className={`text-base md:text-xl font-bold tracking-wide transition-all duration-300 ${textColor}`}>
+                    {currentMessage}
+                  </p>
+                </div>
+
+                <div 
+                  className="relative flex items-center justify-center group touch-none w-36 h-36 md:w-48 md:h-48"
+                  onClick={startScan}
+                >
+                  <div 
+                    className="absolute rounded-full blur-3xl transition-all duration-200"
+                    style={{
+                      width: '150%',
+                      height: '150%',
+                      backgroundColor: '#2dd4bf',
+                      opacity: status === 'scanning' ? (progress / 100) * 0.4 : 0,
+                      transform: `scale(${1 + (progress / 100) * 0.5})`
+                    }}
+                  />
+
+                  <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    viewBox="0 0 24 24" 
+                    fill="none" 
+                    stroke={fingerprintColor} 
+                    strokeWidth="1.2" 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round" 
+                    className={`w-full h-full relative z-10 transition-colors duration-300 cursor-pointer hover:scale-105 active:scale-95 ${status === 'scanning' ? 'animate-pulse' : ''}`}
+                  >
+                    <path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4" />
+                    <path d="M14 13.12c0 2.38 0 6.38-1 8.88" />
+                    <path d="M17.29 21.02c.12-.6.43-2.3.5-3.02" />
+                    <path d="M2 12a10 10 0 0 1 18-6" />
+                    <path d="M2 16h.01" />
+                    <path d="M21.8 16c.2-2 .131-5.354 0-6" />
+                    <path d="M5 19.5C5.5 18 6 15 6 12a6 6 0 0 1 .34-2" />
+                    <path d="M8.65 22c.21-.66.45-1.32.57-2" />
+                    <path d="M9 6.8a6 6 0 0 1 9 5.2v2" />
+                  </svg>
+
+                  {status === 'scanning' && (
+                    <>
+                      <style>
+                        {`
+                          @keyframes scan-laser {
+                            0% { top: -5%; opacity: 0; }
+                            10% { opacity: 1; }
+                            90% { opacity: 1; }
+                            100% { top: 105%; opacity: 0; }
+                          }
+                          .animate-scan-laser {
+                            animation: scan-laser 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+                          }
+                          @keyframes fadeIn {
+                            from { opacity: 0; transform: translateY(10px); }
+                            to { opacity: 1; transform: translateY(0); }
+                          }
+                        `}
+                      </style>
+                      <div className="absolute left-0 right-0 h-[3px] bg-teal-200 shadow-[0_0_20px_6px_#2dd4bf] z-20 animate-scan-laser rounded-full pointer-events-none"></div>
+                    </>
+                  )}
+                </div>
+
+                <div className="mt-24 h-12 flex items-center justify-center">
+                  <p className="text-gray-300 text-sm md:text-base font-semibold tracking-wide">
+                    Klik atau sentuh tombol sidik jari satu kali untuk memulai.
+                  </p>
+                </div>
+              </>
+            )}
+
+          </div>
         </div>
+      );
+    }
 
-        <div class="glass-panel rounded-b-3xl rounded-t-lg p-6 md:p-10">
-            
-            <!-- HEADER -->
-            <div class="mb-8 border-b border-white/10 pb-6 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
-                <div>
-                    <h1 class="text-xl md:text-3xl font-bold text-white tracking-tight font-tech mb-2 leading-tight">
-                        <span class="text-neonOrange block mb-1">
-                            <a href="https://gemini.google.com/share/c8dbf606a9df" target="_blank" class="hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,153,0,0.8)] transition-all cursor-pointer">⚡</a> 
-                            AILABS WORKSPACE
-                        </span>
-                        <span class="text-neonBlue text-lg md:text-2xl tracking-widest">AILABS INFINITY CORE</span>
-                    </h1>
-                </div>
-                
-                <div class="flex flex-col items-end gap-3 w-full md:w-auto">
-                    <div class="flex items-center justify-end gap-4 w-full flex-wrap">
-                        
-                        <!-- FACEBOOK LINK WITH TEXT -->
-                        <div class="flex items-center mr-2">
-                            <span class="text-[10px] text-neonBlue font-bold mr-2 animate-pulse hidden sm:block">Follow dong</span>
-                            <a href="https://www.facebook.com/share/1DxuKkDdFm/" target="_blank" class="text-blue-500 hover:text-white hover:scale-110 transition-all duration-300" title="Follow Bang Pro">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/>
-                                </svg>
-                            </a>
-                        </div>
-
-                        <!-- Sound Control + Visualizer -->
-                        <div class="flex flex-col items-center gap-2 mr-2">
-                            <div class="flex items-center gap-2 bg-black/60 border border-white/10 px-3 py-1 rounded-lg">
-                                <button id="sound-toggle" class="text-neonBlue hover:text-white transition-colors">
-                                    <svg id="icon-sound-on" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-                                    <svg id="icon-sound-off" class="hidden" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
-                                </button>
-                                <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.5" class="w-16 accent-neonBlue">
-                            </div>
-                            <!-- Visualizer Bars -->
-                            <div id="visualizer" class="flex items-end justify-center gap-[2px] h-3 w-full opacity-60">
-                                <div class="v-bar h-1"></div><div class="v-bar h-1"></div><div class="v-bar h-1"></div><div class="v-bar h-1"></div><div class="v-bar h-1"></div><div class="v-bar h-1"></div><div class="v-bar h-1"></div><div class="v-bar h-1"></div>
-                            </div>
-                        </div>
-
-                        <div class="text-right">
-                            <span class="text-[9px] text-gray-300 uppercase tracking-widest block mb-0.5 font-bold">Status</span>
-                            <span class="text-neonBlue font-tech text-xs font-bold">ACTIVE PRIME</span>
-                        </div>
-                        <button id="logout-button" class="text-[10px] text-red-400 border border-red-500/40 px-4 py-1.5 rounded font-bold hover:bg-red-500 hover:text-white transition-all">LOGOUT</button>
-                    </div>
-                    <div class="bg-black/60 border border-white/10 rounded-lg px-3 py-2 flex items-center gap-3">
-                        <span class="relative flex h-2 w-2">
-                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
-                          <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                        </span>
-                        <span class="text-[10px] text-white font-bold uppercase tracking-wide">Online</span>
-                        <div class="flex gap-3 text-[10px] font-mono font-bold text-gray-300">
-                            <span>🇮🇩 <span id="srv1-count">0</span></span>
-                            <span>🇺🇸 <span id="srv2-count">0</span></span>
-                            <span>🇸🇬 <span id="srv3-count">0</span></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB NAVIGATION -->
-            <div class="flex flex-wrap gap-4 mb-10 border-b border-white/5 pb-4">
-                <button onclick="switchTab('apps')" id="tab-apps" class="tab-btn active">APPLICATIONS</button>
-                <button onclick="switchTab('toolkit')" id="tab-toolkit" class="tab-btn">
-                    TOOLKIT
-                    <span class="absolute -top-3 -right-2 bg-red-600 text-white text-[9px] font-bold px-2 py-0.5 rounded animate-pulse shadow-[0_0_8px_red]">NEW</span>
-                </button>
-                <button onclick="switchTab('tutorial')" id="tab-tutorial" class="tab-btn">TUTORIALS</button>
-                <button onclick="switchTab('framework')" id="tab-framework" class="tab-btn">PROMPT FRAMEWORK</button>
-                <button onclick="switchTab('camera')" id="tab-camera" class="tab-btn text-neonBlue border-neonBlue/30 hover:border-neonBlue">42 CAMERA MOVEMENTS</button>
-            </div>
-
-            <!-- TAB CONTENT: APPLICATIONS -->
-            <div id="content-apps">
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
-                    
-                    <!-- 1. Ailabs Scene Pro -->
-                    <a href="https://gemini.google.com/share/cc69a0322d68" target="_blank" class="block app-card p-6 rounded-2xl group">
-                       <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neonBlue transition-colors">Ailabs Scene Pro</h3>
-                       <p class="text-xs text-gray-200 font-medium">Visual scene generator.</p>
-                    </a>
-
-                    <!-- 2. AIlabs Voice Over V2 -->
-                    <a href="https://gemini.google.com/share/ef6398e3bcbc" target="_blank" class="block app-card p-6 rounded-2xl group border-l-4 border-l-neonBlue/50">
-                        <h3 class="text-2xl font-bold text-white group-hover:text-neonBlue transition-colors">AIlabs Voice Over V2</h3>
-                        <p class="text-sm text-gray-200 leading-relaxed font-medium">Advanced Audio Synthesis.</p>
-                    </a>
-
-                    <!-- 3. Ailabs UMKM -->
-                    <a href="https://gemini.google.com/share/9c2a5dfaf7f0" target="_blank" class="block app-card p-6 rounded-2xl group">
-                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neonBlue transition-colors">Ailabs UMKM</h3>
-                        <p class="text-xs text-gray-200 font-medium">Solusi cerdas bisnis.</p>
-                    </a>
-
-                    <!-- 4. Ailabs Affiliate -->
-                    <a href="https://gemini.google.com/share/d9800cca2fa0" target="_blank" class="block app-card p-6 rounded-2xl group">
-                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neonBlue transition-colors">Ailabs Affiliate</h3>
-                        <p class="text-xs text-gray-200 font-medium">Program mitra eksklusif.</p>
-                    </a>
-
-                    <!-- 5. Ailabs Cartoon -->
-                    <a href="https://gemini.google.com/share/226091114d5e" target="_blank" class="block app-card p-6 rounded-2xl group">
-                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neonBlue transition-colors">Ailabs Cartoon</h3>
-                        <p class="text-xs text-gray-200 font-medium">Style kartun instan.</p>
-                    </a>
-
-                    <!-- 6. Restore Image -->
-                    <a href="https://gemini.google.com/share/7082a8de4d9b" target="_blank" class="block app-card p-6 rounded-2xl group">
-                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neonBlue transition-colors">Restore Image</h3>
-                        <p class="text-xs text-gray-200 font-medium">Perbaiki foto lama.</p>
-                    </a>
-
-                    <!-- 7. Auto Caption -->
-                    <a href="https://gemini.google.com/share/432a65b1df34" target="_blank" class="block app-card p-6 rounded-2xl group">
-                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neonBlue transition-colors">Auto Caption</h3>
-                        <p class="text-xs text-gray-200 font-medium">Subtitle otomatis.</p>
-                    </a>
-
-                    <!-- 8. Elite Prompt Lab -->
-                    <a href="https://gemini.google.com/share/663b42f003d0" target="_blank" class="block app-card p-6 rounded-2xl group">
-                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neonBlue transition-colors">Elite Prompt Lab</h3>
-                        <p class="text-xs text-gray-200 font-medium">Optimasi teks AI.</p>
-                    </a>
-
-                    <!-- 11. Ailabs Flux -->
-                    <a href="https://gemini.google.com/share/50d43f8829bf" target="_blank" class="block app-card p-6 rounded-2xl group">
-                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neonBlue transition-colors">Ailabs Flux</h3>
-                        <p class="text-xs text-gray-200 font-medium">Generasi gambar ultra.</p>
-                    </a>
-
-                    <!-- 12. Ailabs Ramadhan Version -->
-                    <a href="https://gemini.google.com/share/fa5bd00de5dd" target="_blank" class="block app-card p-6 rounded-2xl group relative">
-                        <div class="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded animate-pulse z-20 shadow-[0_0_8px_red]">NEW</div>
-                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neonBlue transition-colors">Ailabs Ramadhan Version</h3>
-                        <p class="text-xs text-gray-200 font-medium">Edisi spesial berkah.</p>
-                    </a>
-
-                    <!-- 13. Morp -->
-                    <a href="https://gemini.google.com/share/e0ba482b873c" target="_blank" class="block app-card p-6 rounded-2xl group relative">
-                        <div class="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded animate-pulse z-20 shadow-[0_0_8px_red]">NEW</div>
-                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neonBlue transition-colors">Morp</h3>
-                        <p class="text-xs text-gray-200 font-medium">Transformasi visual halus.</p>
-                    </a>
-
-                    <!-- 14. Ailabs Storyboard -->
-                    <a href="https://gemini.google.com/share/7b9e45c20c5d" target="_blank" class="block app-card p-6 rounded-2xl group relative">
-                        <div class="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded animate-pulse z-20 shadow-[0_0_8px_red]">NEW</div>
-                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neonBlue transition-colors">Ailabs Storyboard</h3>
-                        <p class="text-xs text-gray-200 font-medium">Visualisasi alur cerita.</p>
-                    </a>
-
-                    <!-- New App: DNA -->
-                    <a href="https://gemini.google.com/share/51ad421bbd1f" target="_blank" class="block app-card p-6 rounded-2xl group relative">
-                        <div class="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded animate-pulse z-20 shadow-[0_0_8px_red]">NEW</div>
-                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neonBlue transition-colors">DNA</h3>
-                        <p class="text-xs text-gray-200 font-medium">Analisis struktur data AI.</p>
-                    </a>
-
-                </div>
-            </div>
-
-            <!-- TAB CONTENT: TOOLKIT -->
-            <div id="content-toolkit" class="hidden">
-                 <div class="mb-6 flex items-center gap-4">
-                     <h2 class="text-3xl font-tech font-bold text-white tracking-[0.2em]">TOOLS <span class="text-neonBlue">KREATIF</span></h2>
-                     <div class="h-[2px] flex-1 bg-gradient-to-r from-neonBlue to-transparent"></div>
-                 </div>
-                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
-                     <a href="https://audio-modifier.vercel.app/" target="_blank" class="block app-card p-6 rounded-2xl group relative overflow-hidden">
-                         <div class="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded animate-pulse z-20 shadow-[0_0_8px_red]">NEW</div>
-                         <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neonBlue transition-colors">Manipulation Audio</h3>
-                         <p class="text-xs text-gray-200 font-medium">Advanced audio processing.</p>
-                     </a>
-                     <a href="https://ailabs-cc.vercel.app/" target="_blank" class="block app-card p-6 rounded-2xl group relative overflow-hidden">
-                         <div class="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded animate-pulse z-20 shadow-[0_0_8px_red]">NEW</div>
-                         <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neonBlue transition-colors">Ailabs Capcut</h3>
-                         <p class="text-xs text-gray-200 font-medium">Video editing suite.</p>
-                     </a>
-                     
-                     <!-- New App: EncodeBase64 -->
-                     <a href="https://gemini.google.com/share/520c6663d2a0" target="_blank" class="block app-card p-6 rounded-2xl group relative overflow-hidden">
-                        <div class="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded animate-pulse z-20 shadow-[0_0_8px_red]">NEW</div>
-                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neonBlue transition-colors">EncodeBase64</h3>
-                        <p class="text-xs text-gray-200 font-medium">Data encryption tool.</p>
-                    </a>
-
-                    <!-- New App: AilabsWMremover -->
-                    <a href="https://gemini.google.com/share/5476adb8f28b" target="_blank" class="block app-card p-6 rounded-2xl group relative overflow-hidden">
-                        <div class="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded animate-pulse z-20 shadow-[0_0_8px_red]">NEW</div>
-                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neonBlue transition-colors">AilabsWMremover</h3>
-                        <p class="text-xs text-gray-200 font-medium">Watermark removal AI.</p>
-                    </a>
-
-                    <!-- Music Mastering (Moved from Apps) -->
-                    <a href="https://masteraudio.pro" target="_blank" class="block app-card p-6 rounded-2xl group">
-                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neonBlue transition-colors">Music Mastering</h3>
-                        <p class="text-xs text-gray-200 font-medium">Audio polish pro.</p>
-                    </a>
-
-                    <!-- Prompt Suno Style (Moved from Apps) -->
-                    <a href="https://gemini.google.com/share/6a3f36032542" target="_blank" class="block app-card p-6 rounded-2xl group">
-                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neonBlue transition-colors">Prompt Suno Style</h3>
-                        <p class="text-xs text-gray-200 font-medium">Generator gaya musik.</p>
-                    </a>
-
-                    <!-- New App: Upscale Image -->
-                    <a href="https://upscale-image.vercel.app/" target="_blank" class="block app-card p-6 rounded-2xl group relative overflow-hidden">
-                        <div class="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded animate-pulse z-20 shadow-[0_0_8px_red]">NEW</div>
-                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neonBlue transition-colors">Upscale Image</h3>
-                        <p class="text-xs text-gray-200 font-medium">Tingkatkan resolusi gambar.</p>
-                    </a>
-
-                 </div>
-            </div>
-
-            <!-- TAB CONTENT: TUTORIAL -->
-            <div id="content-tutorial" class="hidden">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="tutorial-card p-6 rounded-2xl flex flex-col justify-between">
-                        <h3 class="text-xl font-bold text-white font-tech mb-4">Desain Cover AI</h3>
-                        <p class="text-sm text-gray-300 mb-6">Panduan pembuatan cover profesional dengan AIlabs Studio Pro.</p>
-                        <a href="https://gemini.google.com/share/b6ce96b95d5a" target="_blank" class="bg-neonOrange/20 border border-neonOrange text-neonOrange py-3 rounded-xl text-center hover:bg-neonOrange hover:text-black transition-all font-bold">BUKA TUTORIAL</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB CONTENT: PROMPT FRAMEWORK -->
-            <div id="content-framework" class="hidden">
-                <div class="explorer-container">
-                    <div class="explorer-sidebar overflow-y-auto" id="file-list"></div>
-                    <div class="explorer-main">
-                        <div class="txt-header">
-                            <span id="active-filename">Pilih file...</span>
-                            <button onclick="copyCurrentPrompt()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded text-[10px] font-bold tracking-wide transition-colors">SALIN</button>
-                        </div>
-                        <div class="txt-content p-6 text-black" id="txt-display">Pilih prompt dari menu samping.</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB CONTENT: CAMERA -->
-            <div id="content-camera" class="hidden">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <a href="https://aishotstudio.com/42-camera-movements-ai-prompts/" target="_blank" class="framework-card p-6 rounded-2xl border border-neonBlue/30 block group">
-                        <h3 class="text-xl font-bold text-white font-tech mb-4 group-hover:text-neonBlue">42 Camera Movements</h3>
-                        <p class="text-sm text-gray-300 mb-4">Panduan pergerakan kamera sinematik AI Video.</p>
-                        <button class="w-full py-2 rounded-lg text-xs font-bold border border-neonBlue text-neonBlue group-hover:bg-neonBlue group-hover:text-black transition-all">OPEN GUIDE</button>
-                    </a>
-                </div>
-            </div>
-
-            <!-- FOOTER -->
-            <div class="mt-12 pt-6 border-t border-white/5 text-center">
-                
-                <!-- Info Penting -->
-                <div class="mb-8 px-6 py-3 bg-white/5 border border-white/10 rounded-xl inline-block backdrop-blur-sm">
-                    <p class="text-xs text-gray-300 font-mono flex flex-col md:flex-row items-center gap-2">
-                        <span class="animate-pulse text-neonOrange">⚠️ INFO PENTING:</span> 
-                        <span>Semua aplikasi ini masih dalam tahap pengembangan. Pastikan selalu cek berkala untuk mendapatkan update terbaru.</span>
-                    </p>
-                </div>
-
-                <!-- WHATSAPP SUPPORT SECTION -->
-                <div class="mb-8">
-                    <h3 class="text-neonBlue font-tech text-xs mb-4 tracking-[0.2em] font-bold">WHATSAPP SUPPORT</h3>
-                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 max-w-3xl mx-auto px-2">
-                        
-                        <!-- Naomy -->
-                        <a href="https://wa.me/6285799231560" target="_blank" class="flex items-center gap-3 bg-white/5 hover:bg-green-500/10 border border-white/10 hover:border-green-500 rounded-lg p-3 transition-all group text-left">
-                            <div class="bg-green-500/20 p-2 rounded-full group-hover:bg-green-500 group-hover:text-black text-green-400 transition-colors">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                            </div>
-                            <div>
-                                <span class="block text-[11px] text-gray-300 font-bold uppercase group-hover:text-white">Naomy</span>
-                                <span class="block text-[10px] text-gray-500 font-mono">0857-9923-1560</span>
-                            </div>
-                        </a>
-
-                        <!-- Wiwik -->
-                        <a href="https://wa.me/6281274038300" target="_blank" class="flex items-center gap-3 bg-white/5 hover:bg-green-500/10 border border-white/10 hover:border-green-500 rounded-lg p-3 transition-all group text-left">
-                            <div class="bg-green-500/20 p-2 rounded-full group-hover:bg-green-500 group-hover:text-black text-green-400 transition-colors">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                            </div>
-                            <div>
-                                <span class="block text-[11px] text-gray-300 font-bold uppercase group-hover:text-white">Wiwik</span>
-                                <span class="block text-[10px] text-gray-500 font-mono">0812-7403-8300</span>
-                            </div>
-                        </a>
-
-                        <!-- Anggi -->
-                        <a href="https://wa.me/6285645313189" target="_blank" class="flex items-center gap-3 bg-white/5 hover:bg-green-500/10 border border-white/10 hover:border-green-500 rounded-lg p-3 transition-all group text-left">
-                            <div class="bg-green-500/20 p-2 rounded-full group-hover:bg-green-500 group-hover:text-black text-green-400 transition-colors">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                            </div>
-                            <div>
-                                <span class="block text-[11px] text-gray-300 font-bold uppercase group-hover:text-white">Anggi</span>
-                                <span class="block text-[10px] text-gray-500 font-mono">0856-4531-3189</span>
-                            </div>
-                        </a>
-
-                        <!-- Purniwati -->
-                        <a href="https://wa.me/6281358494288" target="_blank" class="flex items-center gap-3 bg-white/5 hover:bg-green-500/10 border border-white/10 hover:border-green-500 rounded-lg p-3 transition-all group text-left">
-                            <div class="bg-green-500/20 p-2 rounded-full group-hover:bg-green-500 group-hover:text-black text-green-400 transition-colors">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                            </div>
-                            <div>
-                                <span class="block text-[11px] text-gray-300 font-bold uppercase group-hover:text-white">Purniwati</span>
-                                <span class="block text-[10px] text-gray-500 font-mono">0813-5849-4288</span>
-                            </div>
-                        </a>
-
-                        <!-- Novika -->
-                        <a href="https://wa.me/6282324865269" target="_blank" class="flex items-center gap-3 bg-white/5 hover:bg-green-500/10 border border-white/10 hover:border-green-500 rounded-lg p-3 transition-all group text-left">
-                            <div class="bg-green-500/20 p-2 rounded-full group-hover:bg-green-500 group-hover:text-black text-green-400 transition-colors">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                            </div>
-                            <div>
-                                <span class="block text-[11px] text-gray-300 font-bold uppercase group-hover:text-white">Novika</span>
-                                <span class="block text-[10px] text-gray-500 font-mono">0823-2486-5269</span>
-                            </div>
-                        </a>
-
-                        <!-- Melya -->
-                        <a href="https://wa.me/6285764215523" target="_blank" class="flex items-center gap-3 bg-white/5 hover:bg-green-500/10 border border-white/10 hover:border-green-500 rounded-lg p-3 transition-all group text-left">
-                            <div class="bg-green-500/20 p-2 rounded-full group-hover:bg-green-500 group-hover:text-black text-green-400 transition-colors">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                            </div>
-                            <div>
-                                <span class="block text-[11px] text-gray-300 font-bold uppercase group-hover:text-white">Melya</span>
-                                <span class="block text-[10px] text-gray-500 font-mono">0857-6421-5523</span>
-                            </div>
-                        </a>
-
-                    </div>
-                </div>
-
-                <!-- COMMUNITY & CHANNEL BUTTONS -->
-                <div class="mb-10 flex flex-col md:flex-row items-center justify-center gap-4 px-4">
-                    <!-- Facebook Group -->
-                    <a href="https://www.facebook.com/share/g/1DV4f3KTFH/" target="_blank" class="w-full md:w-auto justify-center inline-flex items-center gap-3 px-6 py-3 bg-blue-600/20 hover:bg-blue-600 text-blue-400 hover:text-white border border-blue-600 rounded-xl font-bold tracking-widest transition-all group shadow-[0_0_10px_rgba(37,99,235,0.2)] hover:shadow-[0_0_20px_rgba(37,99,235,0.6)] text-xs md:text-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="group-hover:scale-110 transition-transform"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
-                        GABUNG KOMUNITAS FACEBOOK
-                    </a>
-
-                    <!-- Whatsapp Channel -->
-                    <a href="https://whatsapp.com/channel/0029VbBogsF9WtBuOgWQBu0R" target="_blank" class="w-full md:w-auto justify-center inline-flex items-center gap-3 px-6 py-3 bg-teal-500/20 hover:bg-teal-500 text-teal-400 hover:text-black border border-teal-500 rounded-xl font-bold tracking-widest transition-all group shadow-[0_0_10px_rgba(20,184,166,0.2)] hover:shadow-[0_0_20px_rgba(20,184,166,0.6)] text-xs md:text-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="group-hover:scale-110 transition-transform"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zM12.05 20.21c-1.5 0-2.97-.39-4.27-1.17l-.3-.18-3.15.83.84-3.07-.2-.32a8.217 8.217 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24 2.2 0 4.27.86 5.82 2.42a8.183 8.183 0 0 1 2.41 5.83c.02 4.54-3.68 8.23-8.13 8.28z"/></svg>
-                        SALURAN PROMPT BANG PRO
-                    </a>
-                </div>
-
-                <p class="text-[10px] text-gray-500 font-mono tracking-[0.2em] uppercase hover:text-neonBlue transition-colors cursor-default">Developer Bang Pro</p>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- WELCOME MODAL + NOTIFICATION -->
-    <div id="welcome-modal" class="hidden fixed inset-0 z-[150] flex items-center justify-center p-4">
-        <div class="absolute inset-0 bg-black/95 backdrop-blur-xl"></div>
-        <div class="relative glass-panel rounded-3xl p-8 max-w-lg w-full text-center border-t-4 border-neonOrange shadow-[0_0_50px_rgba(255,153,0,0.3)]">
-            <div class="mb-6">
-                <div class="w-20 h-20 bg-neonOrange/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-neonOrange/30 overflow-hidden p-3">
-                    <!-- Inline SVG replaced for logo.png fallback -->
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-neonOrange drop-shadow-[0_0_8px_rgba(255,153,0,0.8)]">
-                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-                <h2 class="text-3xl font-tech font-bold text-white mb-2">PENGUMUMAN</h2>
-                <div class="h-1 w-20 bg-neonOrange mx-auto mb-6"></div>
-            </div>
-
-            <div class="text-left space-y-4 mb-8 bg-black/60 p-5 rounded-2xl border border-white/10 font-sans">
-                <p class="text-neonOrange font-bold text-sm tracking-widest uppercase">⚠️ PER 1 MARET 2026</p>
-                <p class="text-gray-200 text-sm leading-relaxed">
-                    Kami memberitahukan bahwa seluruh fitur pada aplikasi <span class="text-neonBlue font-bold">Ailabs Workspace</span> akan dinonaktifkan untuk sementara waktu.
-                </p>
-                <div class="border-l-2 border-neonOrange pl-4 py-1">
-                    <p class="text-gray-400 text-xs italic">
-                        "Penonaktifan ini dilakukan untuk keperluan <span class="text-white">maintenance besar-besaran dan pengembangan sistem</span> demi menghadirkan fitur yang lebih stabil, canggih, dan aman bagi seluruh pengguna VIP."
-                    </p>
-                </div>
-                <p class="text-gray-300 text-xs">
-                    Kami memohon maaf yang sebesar-besarnya atas ketidaknyamanan yang ditimbulkan selama proses pengembangan ini berlangsung.
-                </p>
-            </div>
-
-            <button id="close-welcome-modal" class="w-full bg-neonOrange text-black py-4 rounded-xl font-bold tracking-[0.2em] hover:brightness-125 transition-all shadow-[0_0_20px_rgba(255,153,0,0.4)]">SAYA MENGERTI & LANJUT</button>
-            <p class="mt-4 text-[10px] text-gray-400 font-mono italic">Salam dari Developer Bang Pro</p>
-        </div>
-    </div>
-
-    <script>
-        const userDatabase = { "bangpro": ["8F4K", "L1P9", "A7B0", "Z3H5", "Q6J2", "T9R8", "E5Y1", "W4I7", "U2O6", "P0D3", "S5G4", "V7K9", "C2N1", "X8M0", "B3L6", "M9H2", "F6J8", "G1R5", "I4T7", "N0Y3", "K7U2", "R8P6", "Y3D9", "H5S1", "O4W7", "D9G0", "J2Z5", "2K8F", "6L1A", "1N4Q", "5T7W", "0E2U", "3P8O", "7S3C", "9V6X", "4B9M", "R1J7", "Y6H3", "O2S9", "D5W0", "K8Z4", "T3F1", "I7G6", "P4N2", "U0B8", "W9V5", "E6C3", "M2X0", "C8L7", "G4Q9", "5J1P", "Z8K4", "7G3B", "C0X9", "R2Y5", "V6T1", "9E4H", "F3S7", "Q0L6", "I8W2", "4D9N", "B5M0", "U1A7", "O3F8", "6H2V", "T9G5", "K4Z1", "Y7R3", "P2C9", "E0J4", "8V6M", "1S9L", "3B7K", "N5W0", "M2Q8", "G1P3", "J4R9", "A6E2", "X0Y7", "L7D5", "S8I1", "F4T0", "H2B6", "W9O4", "Z5U3", "V1K8", "C3N7", "R6J2", "E9G4", "T5Q1", "Y0F9", "B7P5", "I2X3", "K8A0", "O4L6", "U3M7", "D9S2", "G5H1", "N0C8", "M1W4", "admin123"] };
-        const frameworkFiles = [{ name: "berbicara_elegan.txt", content: "AI character speaks with an elegant, calm, and professional tone..."}, { name: "bernyanyi_berjalan.txt", content: "Character is singing while walking forward at a natural, steady pace..."}];
-
-        let currentPromptContent = "";
-        const bgAudio = document.getElementById("bg-audio");
-        bgAudio.volume = 0.5;
-
-        let audioCtx, analyser, dataArray, isInit = false;
-
-        function initVisualizer() {
-            if(isInit) return;
-            try {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const src = audioCtx.createMediaElementSource(bgAudio);
-                analyser = audioCtx.createAnalyser();
-                src.connect(analyser);
-                analyser.connect(audioCtx.destination);
-                analyser.fftSize = 64;
-                dataArray = new Uint8Array(analyser.frequencyBinCount);
-                isInit = true;
-                draw();
-            } catch(e) {}
-        }
-
-        function draw() {
-            if(!analyser) return;
-            requestAnimationFrame(draw);
-            analyser.getByteFrequencyData(dataArray);
-            const bars = document.querySelectorAll('.v-bar');
-            bars.forEach((bar, i) => {
-                const h = (dataArray[i] / 255) * 12;
-                bar.style.height = `${Math.max(2, h)}px`;
-            });
-        }
-
-        function switchTab(tab) {
-            ['content-apps', 'content-toolkit', 'content-tutorial', 'content-framework', 'content-camera'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) el.classList.add('hidden');
-            });
-            ['tab-apps', 'tab-toolkit', 'tab-tutorial', 'tab-framework', 'tab-camera'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) el.classList.remove('active');
-            });
-            const contentEl = document.getElementById(`content-${tab}`);
-            const tabEl = document.getElementById(`tab-${tab}`);
-            if (contentEl) contentEl.classList.remove('hidden');
-            if (tabEl) tabEl.classList.add('active');
-        }
-
-        function initExplorer() {
-            const list = document.getElementById('file-list');
-            if(!list) return;
-            list.innerHTML = '';
-            frameworkFiles.forEach(file => {
-                const div = document.createElement('div');
-                div.className = 'file-item';
-                div.innerHTML = `📄 ${file.name}`;
-                div.onclick = (e) => {
-                    // Remove active from all siblings
-                    document.querySelectorAll('.file-item').forEach(el => el.classList.remove('active'));
-                    // Add active to current
-                    e.currentTarget.classList.add('active');
-                    
-                    document.getElementById('active-filename').innerText = file.name;
-                    document.getElementById('txt-display').innerText = file.content;
-                    currentPromptContent = file.content;
-                };
-                list.appendChild(div);
-            });
-        }
-
-        // FUNGSI COPY PROMPT YANG SEBELUMNYA HILANG
-        function copyCurrentPrompt() {
-            if (!currentPromptContent) return;
-            
-            // Clipboard API (Modern browsers)
-            if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(currentPromptContent).then(showToast).catch(err => fallbackCopyTextToClipboard(currentPromptContent));
-            } else {
-                fallbackCopyTextToClipboard(currentPromptContent);
-            }
-        }
-
-        function fallbackCopyTextToClipboard(text) {
-            var textArea = document.createElement("textarea");
-            textArea.value = text;
-            textArea.style.position = "fixed";
-            textArea.style.left = "-999999px";
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-
-            try {
-                var successful = document.execCommand('copy');
-                if (successful) showToast();
-            } catch (err) {
-                console.error('Fallback: Oops, unable to copy', err);
-            }
-            document.body.removeChild(textArea);
-        }
-
-        function showToast() {
-            const toast = document.getElementById("toast");
-            toast.className = "show";
-            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
-        }
-
-        document.getElementById('login-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const pass = document.getElementById('password').value.trim();
-            if (userDatabase["bangpro"].includes(pass)) {
-                sessionStorage.setItem('sessionToken', pass);
-                document.getElementById('login-page').classList.add('hidden');
-                document.getElementById('portal-page').classList.remove('hidden');
-                document.getElementById('welcome-modal').classList.remove('hidden');
-                initExplorer();
-                bgAudio.play().then(() => initVisualizer()).catch(() => {});
-            } else {
-                document.getElementById('error-message').textContent = 'TOKEN INVALID!';
-            }
-        });
-
-        document.getElementById('logout-button').addEventListener('click', () => {
-            sessionStorage.removeItem('sessionToken');
-            location.reload();
-        });
-
-        document.getElementById('close-welcome-modal').addEventListener('click', () => {
-            document.getElementById('welcome-modal').classList.add('hidden');
-        });
-
-        document.getElementById('sound-toggle').addEventListener('click', () => {
-            bgAudio.muted = !bgAudio.muted;
-            document.getElementById('icon-sound-on').classList.toggle('hidden', bgAudio.muted);
-            document.getElementById('icon-sound-off').classList.toggle('hidden', !bgAudio.muted);
-            if(!bgAudio.muted && audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-            
-            // Start audio if it wasn't playing due to browser autoplay policies
-            if (!bgAudio.muted && bgAudio.paused) {
-                bgAudio.play().then(() => initVisualizer()).catch(() => {});
-            }
-        });
-
-        document.getElementById('volume-slider').addEventListener('input', (e) => {
-            bgAudio.volume = e.target.value;
-        });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            if (sessionStorage.getItem('sessionToken')) {
-                document.getElementById('login-page').classList.add('hidden');
-                document.getElementById('portal-page').classList.remove('hidden');
-                initExplorer();
-                // Audio is not auto-played here due to browser interaction policies
-                // The user must click the sound toggle to start it if they bypassed login via session.
-            }
-        });
-    </script>
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
 </body>
 </html>
