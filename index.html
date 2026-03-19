@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ailabs Workspace</title>
+    <title>Ailabs Quantum</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Inter, Orbitron, & Fira Code -->
@@ -32,8 +32,8 @@
                     },
                     keyframes: {
                         glowPulse: {
-                            '0%, 100%': { boxShadow: '0 0 5px #00ffd5', filter: 'brightness(1)' },
-                            '50%': { boxShadow: '0 0 20px #00ffd5', filter: 'brightness(1.2)' },
+                            '0%, 100%': { boxShadow: '0 0 15px #FF9900', filter: 'brightness(1)' },
+                            '50%': { boxShadow: '0 0 40px #FF9900', filter: 'brightness(1.3)' },
                         },
                         float: {
                             '0%, 100%': { transform: 'translateY(0)' },
@@ -93,63 +93,6 @@
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
         }
 
-        .tab-btn {
-            position: relative;
-            padding: 10px 15px;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            font-size: 0.7rem;
-            letter-spacing: 2px;
-            transition: all 0.3s ease;
-            color: rgba(255, 255, 255, 0.5);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            background: rgba(0, 0, 0, 0.6);
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            flex: 1;
-            min-width: 140px;
-            max-width: 200px;
-        }
-
-        .tab-btn.active {
-            color: #00ffd5;
-            border: 2px solid #00ffd5;
-            background: rgba(0, 255, 213, 0.1);
-            box-shadow: 0 0 15px rgba(0, 255, 213, 0.4), inset 0 0 10px rgba(0, 255, 213, 0.2);
-            animation: flicker 4s linear infinite;
-        }
-
-        .app-card {
-            background: rgba(0, 0, 0, 0.4); 
-            backdrop-filter: blur(4px); 
-            border: 2px solid rgba(0, 255, 213, 0.3); 
-            box-shadow: 0 0 15px rgba(0, 255, 213, 0.1);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .app-card:hover {
-            transform: translateY(-5px);
-            background: rgba(0, 255, 213, 0.05); 
-            border-color: #00ffd5;
-            box-shadow: 0 0 30px rgba(0, 255, 213, 0.4), inset 0 0 10px rgba(0, 255, 213, 0.1);
-        }
-
-        .tutorial-card, .framework-card {
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 153, 0, 0.3);
-            transition: all 0.3s ease;
-            backdrop-filter: blur(4px);
-        }
-        .tutorial-card:hover, .framework-card:hover {
-            border-color: #FF9900;
-            box-shadow: 0 0 20px rgba(255, 153, 0, 0.2);
-            transform: translateY(-4px);
-        }
-
         /* Audio Visualizer Style */
         .v-bar {
             width: 4px;
@@ -158,24 +101,6 @@
             box-shadow: 0 0 5px #00ffd5;
             transition: height 0.08s ease;
         }
-
-        /* Explorer Style */
-        .explorer-container {
-            background: rgba(15, 15, 25, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            overflow: hidden;
-            display: flex;
-            height: 600px;
-            backdrop-filter: blur(10px);
-        }
-        .explorer-sidebar { width: 280px; border-right: 1px solid rgba(255, 255, 255, 0.1); background: rgba(0, 0, 0, 0.5); display: flex; flex-direction: column; }
-        .explorer-main { flex: 1; display: flex; flex-direction: column; background: #ffffff; }
-        .file-item { padding: 12px 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: all 0.2s; border-bottom: 1px solid rgba(255, 255, 255, 0.05); color: rgba(255, 255, 255, 0.7); font-size: 0.8rem; }
-        .file-item:hover { background: rgba(0, 255, 213, 0.1); color: #00ffd5; }
-        .file-item.active { background: rgba(0, 255, 213, 0.15); color: #00ffd5; border-left: 4px solid #00ffd5; }
-        .txt-header { background: #f1f5f9; padding: 10px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; color: #475569; font-size: 0.75rem; font-weight: 700; }
-        .txt-content { flex: 1; padding: 24px 32px; color: #0f172a; font-family: 'Fira Code', monospace; font-size: 0.95rem; line-height: 1.8; overflow-y: auto; white-space: pre-wrap; background-image: linear-gradient(#f8fafc 1.3rem, #e2e8f0 1.4rem); background-size: 100% 1.4rem; background-attachment: local; text-shadow: none; }
 
         #toast { visibility: hidden; min-width: 250px; background-color: #00ffd5; color: black; text-align: center; border-radius: 8px; padding: 16px; position: fixed; z-index: 200; left: 50%; bottom: 30px; transform: translateX(-50%); font-family: 'Orbitron', sans-serif; font-weight: bold; box-shadow: 0 0 20px rgba(0, 255, 213, 0.5); text-shadow: none; }
         #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
@@ -205,7 +130,7 @@
             <div class="text-center mb-12">
                 <h1 class="text-4xl md:text-5xl font-tech font-bold text-white mb-3 tracking-wider leading-tight">
                     <span class="text-neonOrange">AI</span>LABS<br>
-                    <span class="text-2xl md:text-3xl tracking-[0.2em] text-white">WORKSPACE</span>
+                    <span class="text-2xl md:text-3xl tracking-[0.2em] text-white">QUANTUM</span>
                 </h1>
                 <div class="h-px w-32 bg-gradient-to-r from-transparent via-neonBlue to-transparent mx-auto mb-6"></div>
                 <span class="inline-block bg-black/40 border border-white/20 text-neonBlue text-xs font-bold tracking-[0.25em] uppercase px-3 py-1 rounded-full">VIP Prime Access</span>
@@ -238,7 +163,7 @@
                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-neonOrange opacity-75"></span>
                 <span class="relative inline-flex rounded-full h-3 w-3 bg-neonOrange"></span>
             </span>
-            <p class="text-[11px] md:text-xs font-bold text-neonOrange tracking-widest uppercase">Pemberitahuan: Sistem beroperasi normal. Selamat datang kembali di Ailabs Workspace!</p>
+            <p class="text-[11px] md:text-xs font-bold text-neonOrange tracking-widest uppercase">Pemberitahuan: Sistem beroperasi normal. Selamat datang kembali di Ailabs Quantum!</p>
         </div>
 
         <div class="glass-panel rounded-b-3xl rounded-t-lg p-6 md:p-10">
@@ -249,9 +174,9 @@
                     <h1 class="text-xl md:text-3xl font-bold text-white tracking-tight font-tech mb-2 leading-tight">
                         <span class="text-neonOrange block mb-1">
                             <a href="https://gemini.google.com/share/c8dbf606a9df" target="_blank" class="hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,153,0,0.8)] transition-all cursor-pointer">⚡</a> 
-                            AILABS WORKSPACE
+                            AILABS QUANTUM
                         </span>
-                        <span class="text-neonBlue text-lg md:text-2xl tracking-widest">AILABS INFINITY CORE</span>
+                        <span class="text-neonBlue text-lg md:text-2xl tracking-widest">QUANTUM CORE</span>
                     </h1>
                 </div>
                 
@@ -304,59 +229,25 @@
                 </div>
             </div>
 
-            <!-- TAB NAVIGATION -->
-            <div class="flex flex-wrap gap-4 mb-10 border-b border-white/5 pb-4">
-                <button onclick="switchTab('apps')" id="tab-apps" class="tab-btn active">APPLICATIONS</button>
-                <button onclick="switchTab('toolkit')" id="tab-toolkit" class="tab-btn">TOOLKIT</button>
-                <button onclick="switchTab('tutorial')" id="tab-tutorial" class="tab-btn">TUTORIALS</button>
-                <button onclick="switchTab('framework')" id="tab-framework" class="tab-btn">PROMPT FRAMEWORK</button>
-                <button onclick="switchTab('camera')" id="tab-camera" class="tab-btn text-neonBlue border-neonBlue/30 hover:border-neonBlue">42 CAMERA MOVEMENTS</button>
-            </div>
+            <!-- MAIN CONTENT: SISTEM TERINTEGRASI -->
+            <div class="mb-12">
+                <div class="flex flex-col items-center justify-center py-20 text-center glass-panel rounded-3xl border-2 border-neonOrange/30 shadow-[0_0_50px_rgba(255,153,0,0.15)] relative overflow-hidden">
+                    
+                    <!-- Glow effect in the background -->
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-neonOrange/10 blur-[80px] rounded-full pointer-events-none"></div>
 
-            <!-- TAB CONTENT: APPLICATIONS -->
-            <div id="content-apps">
-                <div class="flex flex-col items-center justify-center py-16 text-center glass-panel rounded-2xl border border-neonOrange/30">
-                    <div class="w-20 h-20 bg-neonOrange/20 rounded-full flex items-center justify-center mb-6 border border-neonOrange/50 animate-pulse overflow-hidden p-2">
-                        <img src="./logo.png" alt="Ailabs Logo" class="w-full h-full object-contain drop-shadow-[0_0_8px_rgba(255,153,0,0.8)]">
+                    <!-- Enlarged Logo Area -->
+                    <div class="w-40 h-40 md:w-56 md:h-56 bg-neonOrange/20 rounded-full flex items-center justify-center mb-8 border-2 border-neonOrange/50 animate-glow-pulse overflow-hidden p-6 relative z-10">
+                        <img src="./logo.png" alt="Ailabs Logo" class="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(255,153,0,0.8)]">
                     </div>
-                    <h2 class="text-2xl md:text-3xl font-tech font-bold text-white mb-4">SISTEM TERINTEGRASI</h2>
-                    <p class="text-gray-300 mb-8 max-w-md mx-auto text-sm leading-relaxed">Seluruh aplikasi dan fitur Ailabs Workspace kini telah disatukan ke dalam satu link akses utama untuk performa yang lebih maksimal.</p>
-                    <a href="https://gemini.google.com/share/cbc333455276" target="_blank" class="px-8 py-4 bg-neonOrange text-black font-bold font-tech rounded-xl tracking-[0.1em] hover:brightness-125 transition-all shadow-[0_0_20px_rgba(255,153,0,0.4)]">
-                        BUKA AILABS INFINITY
+                    
+                    <h2 class="text-3xl md:text-5xl font-tech font-bold text-white mb-6 tracking-[0.1em] relative z-10">SISTEM <span class="text-neonOrange">QUANTUM</span></h2>
+                    
+                    <p class="text-gray-300 mb-10 max-w-xl mx-auto text-sm md:text-lg leading-relaxed relative z-10">Seluruh fitur, aplikasi, toolkit, dan ekosistem Ailabs kini telah berevolusi dan disatukan ke dalam satu link akses utama untuk performa tak terbatas.</p>
+                    
+                    <a href="https://gemini.google.com/share/cbc333455276" target="_blank" class="px-10 py-5 bg-neonOrange text-black font-bold font-tech rounded-2xl tracking-[0.2em] hover:brightness-125 hover:scale-105 transition-all duration-300 shadow-[0_0_30px_rgba(255,153,0,0.6)] text-sm md:text-lg relative z-10">
+                        BUKA AILABS QUANTUM
                     </a>
-                </div>
-            </div>
-
-            <!-- TAB CONTENT: TOOLKIT -->
-            <div id="content-toolkit" class="hidden">
-                <div class="flex flex-col items-center justify-center py-16 text-center glass-panel rounded-2xl border border-neonOrange/30">
-                    <h2 class="text-2xl md:text-3xl font-tech font-bold text-white mb-4">TOOLKIT TERINTEGRASI</h2>
-                    <p class="text-gray-300 mb-8 max-w-md mx-auto text-sm leading-relaxed">Toolkit kini dapat diakses melalui link portal utama.</p>
-                    <a href="https://gemini.google.com/share/cbc333455276" target="_blank" class="px-8 py-4 bg-neonOrange text-black font-bold font-tech rounded-xl tracking-[0.1em] hover:brightness-125 transition-all shadow-[0_0_20px_rgba(255,153,0,0.4)]">BUKA LINK UTAMA</a>
-                </div>
-            </div>
-
-            <!-- TAB CONTENT: TUTORIAL -->
-            <div id="content-tutorial" class="hidden">
-                <div class="flex flex-col items-center justify-center py-16 text-center glass-panel rounded-2xl border border-neonOrange/30">
-                    <h2 class="text-2xl md:text-3xl font-tech font-bold text-white mb-4">TUTORIAL TERINTEGRASI</h2>
-                    <a href="https://gemini.google.com/share/cbc333455276" target="_blank" class="px-8 py-4 mt-4 bg-neonOrange text-black font-bold font-tech rounded-xl tracking-[0.1em] hover:brightness-125 transition-all shadow-[0_0_20px_rgba(255,153,0,0.4)]">BUKA LINK UTAMA</a>
-                </div>
-            </div>
-
-            <!-- TAB CONTENT: PROMPT FRAMEWORK -->
-            <div id="content-framework" class="hidden">
-                <div class="flex flex-col items-center justify-center py-16 text-center glass-panel rounded-2xl border border-neonOrange/30">
-                    <h2 class="text-2xl md:text-3xl font-tech font-bold text-white mb-4">FRAMEWORK TERINTEGRASI</h2>
-                    <a href="https://gemini.google.com/share/cbc333455276" target="_blank" class="px-8 py-4 mt-4 bg-neonOrange text-black font-bold font-tech rounded-xl tracking-[0.1em] hover:brightness-125 transition-all shadow-[0_0_20px_rgba(255,153,0,0.4)]">BUKA LINK UTAMA</a>
-                </div>
-            </div>
-
-            <!-- TAB CONTENT: CAMERA -->
-            <div id="content-camera" class="hidden">
-                <div class="flex flex-col items-center justify-center py-16 text-center glass-panel rounded-2xl border border-neonOrange/30">
-                    <h2 class="text-2xl md:text-3xl font-tech font-bold text-white mb-4">KAMERA TERINTEGRASI</h2>
-                    <a href="https://gemini.google.com/share/cbc333455276" target="_blank" class="px-8 py-4 mt-4 bg-neonOrange text-black font-bold font-tech rounded-xl tracking-[0.1em] hover:brightness-125 transition-all shadow-[0_0_20px_rgba(255,153,0,0.4)]">BUKA LINK UTAMA</a>
                 </div>
             </div>
 
@@ -367,7 +258,7 @@
                 <div class="mb-8 px-6 py-3 bg-white/5 border border-white/10 rounded-xl inline-block backdrop-blur-sm">
                     <p class="text-xs text-gray-300 font-mono flex flex-col md:flex-row items-center gap-2">
                         <span class="animate-pulse text-neonOrange">⚠️ INFO PENTING:</span> 
-                        <span>Semua aplikasi ini masih dalam tahap pengembangan. Pastikan selalu cek berkala untuk mendapatkan update terbaru.</span>
+                        <span>Sistem telah terintegrasi sepenuhnya. Pastikan selalu cek link utama berkala untuk mendapatkan update terbaru.</span>
                     </p>
                 </div>
 
@@ -471,7 +362,7 @@
         <div class="absolute inset-0 bg-black/95 backdrop-blur-xl"></div>
         <div class="relative glass-panel rounded-3xl p-8 max-w-lg w-full text-center border-t-4 border-neonOrange shadow-[0_0_50px_rgba(255,153,0,0.3)]">
             <div class="mb-6">
-                <div class="w-20 h-20 bg-neonOrange/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-neonOrange/30 overflow-hidden p-2">
+                <div class="w-24 h-24 bg-neonOrange/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-neonOrange/30 overflow-hidden p-2">
                     <!-- Memanggil logo.png dari folder/repositori yang sama -->
                     <img src="./logo.png" alt="Ailabs Logo" class="w-full h-full object-contain drop-shadow-[0_0_8px_rgba(255,153,0,0.8)]">
                 </div>
@@ -482,7 +373,7 @@
             <div class="text-left space-y-4 mb-8 bg-black/60 p-5 rounded-2xl border border-white/10 font-sans">
                 <p class="text-neonOrange font-bold text-sm tracking-widest uppercase">✨ UPDATE SISTEM SELESAI</p>
                 <p class="text-gray-200 text-sm leading-relaxed">
-                    Maintenance telah selesai! Seluruh fitur pada <span class="text-neonBlue font-bold">Ailabs Workspace</span> kini sudah <span class="text-green-400 font-bold">AKTIF</span> dan siap digunakan kembali.
+                    Maintenance telah selesai! Seluruh fitur pada <span class="text-neonBlue font-bold">Ailabs Quantum</span> kini sudah <span class="text-green-400 font-bold">AKTIF</span> dan siap digunakan kembali.
                 </p>
                 <div class="border-l-2 border-neonOrange pl-4 py-1">
                     <p class="text-gray-400 text-xs italic">
@@ -491,16 +382,14 @@
                 </div>
             </div>
 
-            <button id="close-welcome-modal" class="w-full bg-neonOrange text-black py-4 rounded-xl font-bold tracking-[0.2em] hover:brightness-125 transition-all shadow-[0_0_20px_rgba(255,153,0,0.4)]">MASUK KE WORKSPACE</button>
+            <button id="close-welcome-modal" class="w-full bg-neonOrange text-black py-4 rounded-xl font-bold tracking-[0.2em] hover:brightness-125 transition-all shadow-[0_0_20px_rgba(255,153,0,0.4)]">MASUK KE QUANTUM</button>
             <p class="mt-4 text-[10px] text-gray-400 font-mono italic">Salam dari Developer Bang Pro</p>
         </div>
     </div>
 
     <script>
         const userDatabase = { "bangpro": ["8F4K", "L1P9", "A7B0", "Z3H5", "Q6J2", "T9R8", "E5Y1", "W4I7", "U2O6", "P0D3", "S5G4", "V7K9", "C2N1", "X8M0", "B3L6", "M9H2", "F6J8", "G1R5", "I4T7", "N0Y3", "K7U2", "R8P6", "Y3D9", "H5S1", "O4W7", "D9G0", "J2Z5", "2K8F", "6L1A", "1N4Q", "5T7W", "0E2U", "3P8O", "7S3C", "9V6X", "4B9M", "R1J7", "Y6H3", "O2S9", "D5W0", "K8Z4", "T3F1", "I7G6", "P4N2", "U0B8", "W9V5", "E6C3", "M2X0", "C8L7", "G4Q9", "5J1P", "Z8K4", "7G3B", "C0X9", "R2Y5", "V6T1", "9E4H", "F3S7", "Q0L6", "I8W2", "4D9N", "B5M0", "U1A7", "O3F8", "6H2V", "T9G5", "K4Z1", "Y7R3", "P2C9", "E0J4", "8V6M", "1S9L", "3B7K", "N5W0", "M2Q8", "G1P3", "J4R9", "A6E2", "X0Y7", "L7D5", "S8I1", "F4T0", "H2B6", "W9O4", "Z5U3", "V1K8", "C3N7", "R6J2", "E9G4", "T5Q1", "Y0F9", "B7P5", "I2X3", "K8A0", "O4L6", "U3M7", "D9S2", "G5H1", "N0C8", "M1W4", "admin123"] };
-        const frameworkFiles = [{ name: "berbicara_elegan.txt", content: "AI character speaks with an elegant, calm, and professional tone..."}, { name: "bernyanyi_berjalan.txt", content: "Character is singing while walking forward at a natural, steady pace..."}];
 
-        let currentPromptContent = "";
         const bgAudio = document.getElementById("bg-audio");
         bgAudio.volume = 0.5;
 
@@ -532,79 +421,6 @@
             });
         }
 
-        function switchTab(tab) {
-            ['content-apps', 'content-toolkit', 'content-tutorial', 'content-framework', 'content-camera'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) el.classList.add('hidden');
-            });
-            ['tab-apps', 'tab-toolkit', 'tab-tutorial', 'tab-framework', 'tab-camera'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) el.classList.remove('active');
-            });
-            const contentEl = document.getElementById(`content-${tab}`);
-            const tabEl = document.getElementById(`tab-${tab}`);
-            if (contentEl) contentEl.classList.remove('hidden');
-            if (tabEl) tabEl.classList.add('active');
-        }
-
-        function initExplorer() {
-            const list = document.getElementById('file-list');
-            if(!list) return;
-            list.innerHTML = '';
-            frameworkFiles.forEach(file => {
-                const div = document.createElement('div');
-                div.className = 'file-item';
-                div.innerHTML = `📄 ${file.name}`;
-                div.onclick = (e) => {
-                    // Remove active from all siblings
-                    document.querySelectorAll('.file-item').forEach(el => el.classList.remove('active'));
-                    // Add active to current
-                    e.currentTarget.classList.add('active');
-                    
-                    document.getElementById('active-filename').innerText = file.name;
-                    document.getElementById('txt-display').innerText = file.content;
-                    currentPromptContent = file.content;
-                };
-                list.appendChild(div);
-            });
-        }
-
-        // FUNGSI COPY PROMPT YANG SEBELUMNYA HILANG
-        function copyCurrentPrompt() {
-            if (!currentPromptContent) return;
-            
-            // Clipboard API (Modern browsers)
-            if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(currentPromptContent).then(showToast).catch(err => fallbackCopyTextToClipboard(currentPromptContent));
-            } else {
-                fallbackCopyTextToClipboard(currentPromptContent);
-            }
-        }
-
-        function fallbackCopyTextToClipboard(text) {
-            var textArea = document.createElement("textarea");
-            textArea.value = text;
-            textArea.style.position = "fixed";
-            textArea.style.left = "-999999px";
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-
-            try {
-                var successful = document.execCommand('copy');
-                if (successful) showToast();
-            } catch (err) {
-                console.error('Fallback: Oops, unable to copy', err);
-            }
-            document.body.removeChild(textArea);
-        }
-
-        function showToast() {
-            const toast = document.getElementById("toast");
-            toast.className = "show";
-            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
-        }
-
         document.getElementById('login-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const pass = document.getElementById('password').value.trim();
@@ -613,7 +429,6 @@
                 document.getElementById('login-page').classList.add('hidden');
                 document.getElementById('portal-page').classList.remove('hidden');
                 document.getElementById('welcome-modal').classList.remove('hidden');
-                initExplorer();
                 bgAudio.play().then(() => initVisualizer()).catch(() => {});
             } else {
                 document.getElementById('error-message').textContent = 'TOKEN INVALID!';
@@ -652,7 +467,6 @@
                 document.getElementById('login-page').classList.add('hidden');
                 document.getElementById('portal-page').classList.remove('hidden');
                 document.getElementById('welcome-modal').classList.remove('hidden');
-                initExplorer();
                 // Audio is not auto-played here due to browser interaction policies
                 // The user must click the sound toggle to start it if they bypassed login via session.
             }
