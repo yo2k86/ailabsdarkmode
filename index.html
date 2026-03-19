@@ -440,10 +440,9 @@
             location.reload();
         });
 
+        // Di sini kita hanya menyembunyikan modal, tanpa membuka link.
         document.getElementById('close-welcome-modal').addEventListener('click', () => {
             document.getElementById('welcome-modal').classList.add('hidden');
-            // Menambahkan fungsi untuk otomatis membuka link saat tombol diklik
-            window.open('https://gemini.google.com/share/cbc333455276', '_blank');
         });
 
         document.getElementById('sound-toggle').addEventListener('click', () => {
