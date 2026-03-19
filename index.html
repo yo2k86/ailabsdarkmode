@@ -462,13 +462,36 @@
             bgAudio.volume = e.target.value;
         });
 
+        // --- FUNGSI AUTOPLAY MUSIK DI AWAL ---
+        let audioStarted = false;
+        function playMusicOnStart() {
+            if (audioStarted) return;
+            bgAudio.play().then(() => {
+                audioStarted = true;
+                initVisualizer();
+                // Hapus event listener setelah musik berhasil diputar agar tidak membebani browser
+                document.removeEventListener('click', playMusicOnStart);
+                document.removeEventListener('keydown', playMusicOnStart);
+                document.removeEventListener('touchstart', playMusicOnStart);
+            }).catch(() => {
+                // Autoplay diblokir oleh browser, menunggu pengguna klik layar
+                console.log("Menunggu interaksi pengguna untuk memutar musik...");
+            });
+        }
+
+        // Deteksi interaksi pertama pengguna (klik, ketik, sentuh) untuk memutar musik
+        document.addEventListener('click', playMusicOnStart);
+        document.addEventListener('keydown', playMusicOnStart);
+        document.addEventListener('touchstart', playMusicOnStart);
+
         document.addEventListener('DOMContentLoaded', () => {
+            // Coba putar musik langsung saat halaman dimuat
+            playMusicOnStart();
+
             if (sessionStorage.getItem('sessionToken')) {
                 document.getElementById('login-page').classList.add('hidden');
                 document.getElementById('portal-page').classList.remove('hidden');
                 document.getElementById('welcome-modal').classList.remove('hidden');
-                // Audio is not auto-played here due to browser interaction policies
-                // The user must click the sound toggle to start it if they bypassed login via session.
             }
         });
     </script>
