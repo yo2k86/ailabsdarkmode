@@ -79,7 +79,8 @@
         .bg-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle at 15% 15%, rgba(124, 58, 237, 0.05) 0%, transparent 50%),
-                        radial-gradient(circle at 85% 85%, rgba(255, 153, 0, 0.05) 0%, transparent 50%);
+                        radial-gradient(circle at 85% 85%, rgba(255, 153, 0, 0.05) 0%, transparent 50%),
+                        rgba(0, 0, 0, 0.4); /* Slightly darkened for better readability without image */
             z-index: -1;
         }
 
@@ -165,7 +166,7 @@
             <p class="text-[11px] md:text-xs font-bold text-neonOrange tracking-widest uppercase">Pemberitahuan: Sistem beroperasi normal. Selamat datang kembali di Ailabs Quantum!</p>
         </div>
 
-        <div class="rounded-b-3xl rounded-t-lg p-6 md:p-10">
+        <div class="glass-panel rounded-b-3xl rounded-t-lg p-6 md:p-10">
             
             <!-- HEADER -->
             <div class="mb-8 border-b border-white/10 pb-6 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
@@ -230,14 +231,13 @@
 
             <!-- MAIN CONTENT: SISTEM TERINTEGRASI -->
             <div class="mb-12">
-                <!-- Kotak Hitam & Orange yang disamarkan (bg-black/10, backdrop-blur-sm, border-neonOrange/20) -->
-                <div class="flex flex-col items-center justify-center py-12 px-6 text-center relative bg-black/10 backdrop-blur-sm border border-neonOrange/20 rounded-3xl shadow-[0_0_15px_rgba(255,153,0,0.05)] overflow-hidden">
+                <div class="flex flex-col items-center justify-center py-10 text-center relative">
                     
                     <!-- Glow effect in the background -->
-                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-neonOrange/10 blur-[80px] rounded-full pointer-events-none"></div>
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150px] h-[150px] bg-neonOrange/10 blur-[60px] rounded-full pointer-events-none"></div>
 
                     <!-- Logo Area -->
-                    <div class="w-40 h-40 md:w-56 md:h-56 bg-neonOrange/20 rounded-full flex items-center justify-center mb-6 border-2 border-neonOrange/50 animate-glow-pulse overflow-hidden p-6 relative z-10">
+                    <div class="w-20 h-20 bg-neonOrange/20 rounded-full flex items-center justify-center mb-6 border-2 border-neonOrange/50 animate-glow-pulse overflow-hidden p-3 relative z-10">
                         <img src="./logo.png" alt="Ailabs Logo" class="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(255,153,0,0.8)]">
                     </div>
                     
