@@ -299,6 +299,7 @@
             <div class="flex flex-wrap gap-4 mb-10 border-b border-white/5 pb-4">
                 <button onclick="switchTab('apps')" id="tab-apps" class="tab-btn active">APPLICATIONS</button>
                 <button onclick="switchTab('apps2')" id="tab-apps2" class="tab-btn">APPLICATIONS 2</button>
+                <button onclick="switchTab('vibeai')" id="tab-vibeai" class="tab-btn">VIBEAI LABS</button>
                 <button onclick="switchTab('toolkit')" id="tab-toolkit" class="tab-btn">
                     TOOLKIT
                     <span class="absolute -top-3 -right-2 bg-red-600 text-white text-[9px] font-bold px-2 py-0.5 rounded animate-pulse shadow-[0_0_8px_red]">NEW</span>
@@ -397,6 +398,49 @@
                 </div>
             </div>
 
+            <!-- TAB CONTENT: APPLICATIONS 2 -->
+            <div id="content-apps2" class="hidden">
+                 <div class="mb-6 flex items-center gap-4">
+                     <h2 class="text-3xl font-tech font-bold text-white tracking-[0.2em]">APPLICATIONS <span class="text-neonBlue">2</span></h2>
+                     <div class="h-[2px] flex-1 bg-gradient-to-r from-neonBlue to-transparent"></div>
+                 </div>
+                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
+                     
+                     <!-- 1. DNA PRO -->
+                     <a href="https://gemini.google.com/share/9eeddd398bc6" target="_blank" class="block app-card p-6 rounded-2xl group relative">
+                         <div class="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded animate-pulse z-20 shadow-[0_0_8px_red]">NEW</div>
+                         <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neonBlue transition-colors">DNA PRO</h3>
+                         <p class="text-xs text-gray-200 font-medium">Versi pro analisis struktur data AI.</p>
+                     </a>
+
+                 </div>
+            </div>
+
+            <!-- TAB CONTENT: VIBEAI LABS -->
+            <div id="content-vibeai" class="hidden">
+                 <div class="mb-6 flex items-center gap-4">
+                     <h2 class="text-3xl font-tech font-bold text-white tracking-[0.2em]">VIBEAI <span class="text-neonBlue">LABS</span></h2>
+                     <div class="h-[2px] flex-1 bg-gradient-to-r from-neonBlue to-transparent"></div>
+                 </div>
+                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
+                     
+                     <!-- 1. Motion -->
+                     <a href="https://opal.google/app/1MwZb47W07qKQ2wT1AaARxYo1_M3TVlRM" target="_blank" class="block app-card p-6 rounded-2xl group relative">
+                         <div class="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded animate-pulse z-20 shadow-[0_0_8px_red]">NEW</div>
+                         <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neonBlue transition-colors">Motion</h3>
+                         <p class="text-xs text-gray-200 font-medium">Platform generasi video motion AI.</p>
+                     </a>
+
+                     <!-- 2. Control Motion -->
+                     <a href="https://opal.google/app/1SJ98ELOkM7EiVnEcCxHPmHe7OlKQm-5f" target="_blank" class="block app-card p-6 rounded-2xl group relative">
+                         <div class="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded animate-pulse z-20 shadow-[0_0_8px_red]">NEW</div>
+                         <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neonBlue transition-colors">Control Motion</h3>
+                         <p class="text-xs text-gray-200 font-medium">Kontrol presisi pergerakan AI video.</p>
+                     </a>
+
+                 </div>
+            </div>
+
             <!-- TAB CONTENT: TOOLKIT -->
             <div id="content-toolkit" class="hidden">
                  <div class="mb-6 flex items-center gap-4">
@@ -454,24 +498,6 @@
                         <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neonBlue transition-colors">Ailabs Speed</h3>
                         <p class="text-xs text-gray-200 font-medium">Akselerasi dan pengontrol kecepatan.</p>
                     </a>
-
-                 </div>
-            </div>
-
-            <!-- TAB CONTENT: APPLICATIONS 2 -->
-            <div id="content-apps2" class="hidden">
-                 <div class="mb-6 flex items-center gap-4">
-                     <h2 class="text-3xl font-tech font-bold text-white tracking-[0.2em]">APPLICATIONS <span class="text-neonBlue">2</span></h2>
-                     <div class="h-[2px] flex-1 bg-gradient-to-r from-neonBlue to-transparent"></div>
-                 </div>
-                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
-                     
-                     <!-- 1. DNA PRO -->
-                     <a href="https://gemini.google.com/share/9eeddd398bc6" target="_blank" class="block app-card p-6 rounded-2xl group relative">
-                         <div class="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded animate-pulse z-20 shadow-[0_0_8px_red]">NEW</div>
-                         <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neonBlue transition-colors">DNA PRO</h3>
-                         <p class="text-xs text-gray-200 font-medium">Versi pro analisis struktur data AI.</p>
-                     </a>
 
                  </div>
             </div>
@@ -692,11 +718,11 @@
         }
 
         function switchTab(tab) {
-            ['content-apps', 'content-apps2', 'content-toolkit', 'content-tutorial', 'content-framework', 'content-camera'].forEach(id => {
+            ['content-apps', 'content-apps2', 'content-vibeai', 'content-toolkit', 'content-tutorial', 'content-framework', 'content-camera'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) el.classList.add('hidden');
             });
-            ['tab-apps', 'tab-apps2', 'tab-toolkit', 'tab-tutorial', 'tab-framework', 'tab-camera'].forEach(id => {
+            ['tab-apps', 'tab-apps2', 'tab-vibeai', 'tab-toolkit', 'tab-tutorial', 'tab-framework', 'tab-camera'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) el.classList.remove('active');
             });
